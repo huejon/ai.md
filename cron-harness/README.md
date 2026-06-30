@@ -1,6 +1,6 @@
 # Long-Horizon Repository Renewal Harness
 
-Purpose: continue a durable, evidence-backed renewal loop that keeps this agent-runtime operations repository minimal, high-signal, and useful for recurring long tasks.
+Purpose: continue a durable, evidence-backed renewal loop that keeps this agent-runtime operations repository minimal, high-signal, and useful for recurring long tasks, especially curated knowledge maintenance.
 
 This harness replaces one-off daily cron churn. Each run must learn from current repository evidence, improve one meaningful part of the operating system, and leave a durable handoff for the next run.
 
@@ -8,7 +8,7 @@ This harness replaces one-off daily cron churn. Each run must learn from current
 
 Each run must:
 
-1. Read `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, and this file.
+1. Read `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, `knowledge/research/good-ai-assisted-research-methodology.md`, and this file.
 2. Run `git log --oneline -10` and `date`.
 3. Inspect relevant tree areas before editing.
 4. Load or create the active local work ledger, normally `.opencode/works/repo-renewal-long/`, unless the invoking command or user explicitly names a different active ledger path.
@@ -75,6 +75,15 @@ Each non-blocked run should record at least one of:
 - a concrete improvement to commands, skills, harnesses, or docs.
 
 Do not preserve historical work solely because it exists. Preserve artifacts because they are canonical, referenced, current, or useful for future operation.
+
+## Cron Responsibility Split
+
+This section defines recurring responsibilities and boundaries. It does not by itself install a scheduler, daemon, or external automation.
+
+- **ai.md knowledge-curation cron**: operates in this repository. It refreshes research notes, classifies freshness/value, maintains `knowledge/INDEX.md`, updates harness/checklists, and records evidence in `.opencode/works/`. It may propose distilled OpenCode guidance but should not bulk-copy active config artifacts into this repo.
+- **config-opencode application cron**: operates in `~/.config/opencode`. It reads curated `ai.md` knowledge, applies only minimal operational changes to active OpenCode agents/commands/skills/references/prompts, validates the config repo, and records its own local ledger.
+
+When a run touches research methodology, use the current methodology note as the default quality gate and record source hierarchy, search protocol, AI-audit checks, and review/judge evidence.
 
 ## Completion Criteria
 

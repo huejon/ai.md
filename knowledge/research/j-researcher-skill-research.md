@@ -1,7 +1,7 @@
 # j-researcher Skill Research
 
 > Last updated: 2026-02-17
-> Status: Current
+> Status: Aging
 
 ## Summary
 

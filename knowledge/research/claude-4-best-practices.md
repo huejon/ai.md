@@ -1,7 +1,7 @@
 # Claude 4.x Prompting Best Practices
 
 > Last updated: 2026-02-14
-> Status: Current
+> Status: Aging
 
 ## Summary
 

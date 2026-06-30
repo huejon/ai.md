@@ -1,7 +1,8 @@
 # Task Execution Autonomy Guardrails
 
 > Last updated: 2026-02-16
-> Status: Current
+> Status: Aging
+> Note: `samples/` source paths below are retired and no longer exist in this repository; use them as historical evidence leads only.
 
 ## Summary
 

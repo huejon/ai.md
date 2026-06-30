@@ -1,7 +1,7 @@
 # Multi-Agent Patterns
 
 > Last updated: 2026-02-15
-> Status: Current
+> Status: Aging
 
 ## Summary
 

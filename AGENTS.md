@@ -4,13 +4,13 @@ Universal rules for agents operating in this repository.
 
 ## Purpose
 
-This repository is an owned prompt-engineering operations workspace for agent-runtime. It now keeps renewal harnesses, checklists, and research context. Active OpenCode agents, skills, prompts, templates, and references live in `~/.config/opencode`. Outputs are cognitive configuration and operational documentation, not application code.
+This repository is an owned prompt-engineering operations workspace for agent-runtime. It now keeps renewal harnesses, checklists, and curated research context. Active OpenCode agents, skills, prompts, templates, and references live in `~/.config/opencode`. Outputs are cognitive configuration and operational documentation, not application code.
 
 ## Operating Model
 
 - **coordinating process orchestrates.** coordinating process selects priorities, starts daily loops, and coordinates agents.
 - **local runner engineers.** local runner performs local edits, file organization, harness work, verification, and evidence reporting.
-- **Repository artifacts guide specialist work.** Use the renewal harness, cleanup notes, and knowledge base here; use `~/.config/opencode` for active agents, skills, prompts, templates, references, and commands.
+- **Repository artifacts guide specialist work.** Use the renewal harness, cleanup notes, and knowledge base here; use `~/.config/opencode` for active agents, skills, prompts, templates, references, and commands. Do not bulk-copy knowledge files into config; distill operational rules only.
 - **Artifacts are English.** Prompts, specs, skills, ledgers, reports, and docs are written in English.
 - **Conversation is Portuguese.** User-facing clarification and status are in Portuguese unless asked otherwise.
 
@@ -32,10 +32,15 @@ Recurring automated improvement work must start at `cron-harness/README.md` or t
 
 The `/daily-cron` command name is retained for compatibility, but its job is long-horizon repository renewal. It should normally continue the local `.opencode/works/repo-renewal-long/` ledger and use the `work` agent flow.
 
+Recurring responsibility is split:
+
+- The **ai.md knowledge-curation cron** maintains curated research, `knowledge/INDEX.md`, and harness guidance in this repository.
+- The **config-opencode application cron** runs separately in `~/.config/opencode`, reads this repository's curated findings, and updates only distilled active OpenCode guidance.
+
 Harness gates:
 
 1. Establish scope and loop state.
-2. Read current policy, knowledge index, and relevant artifacts.
+2. Read current policy, knowledge index, `knowledge/research/good-ai-assisted-research-methodology.md`, and relevant artifacts.
 3. Prefer safe, small, reversible edits.
 4. Apply only changes allowed by the safe auto-apply policy.
 5. Run the evaluation checklist before claiming completion.

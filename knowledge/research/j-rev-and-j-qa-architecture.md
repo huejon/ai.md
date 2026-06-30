@@ -1,7 +1,7 @@
 # j-rev and j-qa Architecture Research (Deep)
 
 > Last Updated: 2026-02-17
-> Status: Current
+> Status: Aging
 
 ## Summary
 

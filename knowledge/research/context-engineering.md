@@ -1,7 +1,7 @@
 # Context Engineering
 
 > Last updated: 2026-02-14
-> Status: Current
+> Status: Aging
 
 ## Summary
 
