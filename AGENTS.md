@@ -4,13 +4,13 @@ Universal rules for agents operating in this repository.
 
 ## Purpose
 
-This repository is an owned prompt-engineering operations workspace for agent-runtime. It improves prompts, harnesses, skills, commands, agent specs, and loop engineering. Outputs are cognitive configuration and operational documentation, not application code.
+This repository is an owned prompt-engineering operations workspace for agent-runtime. It now keeps renewal harnesses, checklists, and research context. Active OpenCode agents, skills, prompts, templates, and references live in `~/.config/opencode`. Outputs are cognitive configuration and operational documentation, not application code.
 
 ## Operating Model
 
 - **coordinating process orchestrates.** coordinating process selects priorities, starts daily loops, and coordinates agents.
 - **local runner engineers.** local runner performs local edits, file organization, harness work, verification, and evidence reporting.
-- **Repository artifacts guide specialist work.** Use durable specs, prompts, skills, templates, and knowledge for non-trivial prompt or skill work; do not rely on deleted local deployable prompt copies.
+- **Repository artifacts guide specialist work.** Use the renewal harness, cleanup notes, and knowledge base here; use `~/.config/opencode` for active agents, skills, prompts, templates, references, and commands.
 - **Artifacts are English.** Prompts, specs, skills, ledgers, reports, and docs are written in English.
 - **Conversation is Portuguese.** User-facing clarification and status are in Portuguese unless asked otherwise.
 
@@ -56,7 +56,7 @@ local automation may commit and push routine validated repository maintenance di
 
 ## D.A.R.T.E. Workflow
 
-Use D.A.R.T.E. for new or materially changed prompts and skills:
+Use D.A.R.T.E. for new or materially changed prompts and skills. Active artifacts should be authored in `~/.config/opencode` unless the task explicitly targets this repo's harness or research:
 
 1. **Discovery** — Collect requirements and constraints.
 2. **Architecture** — Define identity, reasoning, tools, context, safety, and success criteria.
@@ -109,17 +109,13 @@ Read `knowledge/INDEX.md` before research. If research is created or updated, up
 ```text
 cron-harness/              # Long-horizon renewal loop contract and checklists
 .opencode/works/           # Local-only local runner work ledgers and handoffs
-agents/                    # Agent artifacts
-skills/                    # Skill artifacts
 knowledge/                 # Shared research base
-templates/                 # Planning and delivery templates
-guides/                    # Supporting guides
 ```
 
 Rules:
-- Preserve valuable canonical skills, agents, templates, and knowledge.
+- Preserve valuable knowledge and harness artifacts. Current OpenCode agents, skills, prompts, templates, and references live in `~/.config/opencode`, not this repository.
 - Keep local runner project configuration minimal, high-signal, and local-only. Work ledgers belong under `.opencode/works/<work-name>/`; do not create root `work-ledgers/`.
-- Legacy local deployable prompt-copy directories are intentionally absent; canonical development artifacts live under `agents/`, `skills/`, `knowledge/`, `templates/`, `guides/`, and the harness.
+- Legacy local prompt-copy directories are intentionally absent; do not reintroduce root `agents/`, `skills/`, `templates/`, `prompts/`, or `guides/` here.
 - Keep generated outputs small, high-signal, and reversible.
 
 ## Inviolable Rules
