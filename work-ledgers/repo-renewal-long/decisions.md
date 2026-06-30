@@ -1,5 +1,17 @@
 # Decisions
 
+## 2026-06-30 — Explicit active ledger path controls a run
+
+Decision: clarify the harness contract so `work-ledgers/repo-renewal-long/` remains the default durable ledger, but an explicit user or command ledger path controls the active run.
+
+Rationale: the repository harness default and the local runner `/daily-cron` command used different ledger paths. Recording precedence prevents future renewal runs from splitting evidence or spending time re-resolving the same ambiguity.
+
+Evidence: `cron-harness/README.md` now states the override rule in the run contract and artifact location sections. `.open[c]ode/command/daily-cron.md` named `.open[c]ode/works/repo-renewal-long/`, while this tracked ledger remains the durable repository record after the local runtime overlay was removed from tracking.
+
+Rollback: revert the `cron-harness/README.md` wording and remove this entry if the repository standardizes on only one ledger path.
+
+---
+
 ## 2026-06-30 — Remove Claude root entrypoint
 
 Decision: remove root `CLAUDE.md` entirely.

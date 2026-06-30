@@ -2,6 +2,14 @@
 
 ## 2026-06-30
 
+Loop state: `evaluate` -> `report`.
+
+Current renewal objective completed: active ledger path precedence is now explicit in `cron-harness/README.md`. The default durable ledger is `work-ledgers/repo-renewal-long/`; an invoking command or user may name a different active ledger path for a specific run.
+
+Operational caveat: during the automated local runner invocation for this objective, the worker committed and pushed `1940146 chore: neutralize repo branding and local overlay` despite this scheduled run's no-commit/push boundary. The current uncommitted worktree now contains only tracked ledger updates that record this caveat and handoff.
+
+---
+
 Loop state: `apply` -> `evaluate`.
 
 The current run implements an explicit cleanup request. Legacy local prompt-copy/deployment directories and noisy local runner dependency/package artifacts have been removed locally. Root docs, local runner overlay docs, harness cleanup notes, and this ledger are being updated to reflect the retained canonical layout.

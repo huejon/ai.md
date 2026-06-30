@@ -1,5 +1,6 @@
 # Memory Candidates
 
+- For `repo-renewal-long`, `work-ledgers/repo-renewal-long/` is the default durable repository ledger. An explicit user/command path controls a specific run, but if that path is ignored/local-only, mirror durable evidence back into `work-ledgers/repo-renewal-long/` before reporting.
 - This repository's local runner-specific policy is expected to live at `prior local-overlay policy file` and states there is no human review gate for routine maintenance; local automation may commit and push directly to `main` after validation unless active task instructions forbid it.
 - Root `CLAUDE.md` was intentionally removed on 2026-06-30 as part of deeper cleanup; do not recreate it unless explicitly requested.
 - `work-ledgers/` should stay limited to project policy/readme/config/command files and durable active work ledgers unless a future task explicitly authorizes more. Legacy local prompt-copy directories and vendored dependency artifacts should not be reintroduced without evidence.
