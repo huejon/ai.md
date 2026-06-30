@@ -11,12 +11,12 @@ Each run must:
 1. Read `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, and this file.
 2. Run `git log --oneline -10` and `date`.
 3. Inspect relevant tree areas before editing.
-4. Load or create the active durable work ledger, normally `work-ledgers/repo-renewal-long/`, unless the invoking command or user explicitly names a different active ledger path.
+4. Load or create the active local work ledger, normally `.opencode/works/repo-renewal-long/`, unless the invoking command or user explicitly names a different active ledger path.
 5. Select exactly one primary loop state from the list below.
 6. Select one narrow renewal objective with explicit evidence and acceptance criteria.
 7. Make meaningful, reversible local changes covered by the safe auto-apply policy and the active user instruction.
 8. Run the evaluation checklist.
-9. Update the durable ledger, especially `run-log.md`, `decisions.md`, `memory-candidates.md`, and `handoff.md`.
+9. Update the local ledger, especially `run-log.md`, `decisions.md`, `memory-candidates.md`, and `handoff.md`.
 10. Report changed, created, and removed files with verification evidence.
 
 ## Loop States
@@ -34,7 +34,7 @@ Each run must:
 Allowed without extra approval:
 - add or refine docs, checklists, prompts, command files, skills, agent specs, and templates;
 - correct broken links, stale wording, and duplicate low-value wording;
-- add reports or work ledgers under `work-ledgers/`;
+- add reports or work ledgers under local `.opencode/works/`;
 - update `knowledge/INDEX.md` when research files are changed;
 - remove old/noisy artifacts only when the active user task explicitly authorizes cleanup and the ledger records evidence, risk, and reversal path first.
 
@@ -48,19 +48,19 @@ Not allowed without explicit approval or an active task that explicitly grants c
 Commit/push precedence guard:
 - The active user or command instruction for the current run overrides the repository's routine direct-commit policy.
 - If the active instruction forbids commit or push, do not commit or push even when repository policy would normally allow it.
-- If the active instruction explicitly requests commit/push after validation, perform it only after the evaluation checklist passes and the durable ledger records the validation evidence.
+- If the active instruction explicitly requests commit/push after validation, perform it only after the evaluation checklist passes and the local ledger records the validation evidence.
 - Opening PRs remains disallowed unless the active instruction explicitly requests it.
 
 When unsure, do not delete or rewrite. Add the candidate to `cleanup-plan.md` or the active work ledger's `proposals/` directory with evidence and a recommended owner decision.
 
 ## Artifact Locations
 
-- Durable renewal ledger: `work-ledgers/repo-renewal-long/` by default, or the explicit active ledger path named by the user/command for the run.
-- Daily or task reports: `work-ledgers/<work-name>/handoff.md` plus dated findings when useful.
-- Run logs: `work-ledgers/<work-name>/run-log.md`.
-- Findings: `work-ledgers/<work-name>/findings/`.
-- Reviews: `work-ledgers/<work-name>/reviews/`.
-- Proposals: `work-ledgers/<work-name>/proposals/`.
+- Renewal ledger: local `.opencode/works/repo-renewal-long/` by default. Do not create or revive root `work-ledgers/` unless the user explicitly asks for a tracked neutral ledger.
+- Daily or task reports: `.opencode/works/<work-name>/handoff.md` plus dated findings when useful.
+- Run logs: `.opencode/works/<work-name>/run-log.md`.
+- Findings: `.opencode/works/<work-name>/findings/`.
+- Reviews: `.opencode/works/<work-name>/reviews/`.
+- Proposals: `.opencode/works/<work-name>/proposals/`.
 - Cleanup candidates: `cron-harness/cleanup-plan.md`.
 - Prompt and loop checklists: this directory.
 

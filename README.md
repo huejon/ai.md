@@ -7,7 +7,7 @@ This repository is an owned prompt-engineering operations workspace for agent-ru
 ## Practical Use
 
 1. Start by reading `AGENTS.md`, this `README.md`, and `knowledge/INDEX.md`.
-2. For recurring renewal, follow `cron-harness/README.md` and keep durable state in `work-ledgers/`.
+2. For recurring renewal, follow `cron-harness/README.md` and keep work state in local `.opencode/works/`.
 3. Use D.A.R.T.E. for new or materially changed prompts and skills: Discovery, Architecture, Redaction, Test, Enhance.
 4. Keep local runner configuration and its local work board untracked.
 5. Commit and push validated routine maintenance to `main` when the active task and repository policy allow it.
@@ -28,7 +28,7 @@ Start recurring repository renewal at `cron-harness/README.md` or invoke the loc
 /daily-cron
 ```
 
-The command name remains `/daily-cron` for compatibility, but the workflow now continues the durable ledger at `work-ledgers/repo-renewal-long/`. The harness defines the run contract, evaluation checklist, cleanup rules, evidence requirements, and handoff format for long-duration prompt, skill, command, harness, knowledge, and loop-engineering improvements.
+The command name remains `/daily-cron` for compatibility, but the workflow now continues the local ledger at `.opencode/works/repo-renewal-long/`. The harness defines the run contract, evaluation checklist, cleanup rules, evidence requirements, and handoff format for long-duration prompt, skill, command, harness, knowledge, and loop-engineering improvements.
 
 ## Essential Layout
 
@@ -37,7 +37,7 @@ AGENTS.md                 # Repository operating rules
 README.md                 # Human entrypoint
 cron-harness/             # Long-horizon renewal loop contract and checklists
 knowledge/INDEX.md        # Research index; read before research
-work-ledgers/             # Durable local runner work ledgers and handoffs
+.opencode/works/          # Local-only local runner work ledgers and handoffs
 agents/                   # Agent specs, prompts, tests, evaluations
 skills/                   # Skill artifacts and evaluations
 templates/                # Planning and delivery templates

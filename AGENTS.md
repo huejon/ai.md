@@ -30,7 +30,7 @@ Do not skip this, even for simple tasks.
 
 Recurring automated improvement work must start at `cron-harness/README.md` or the local runner command `/daily-cron`.
 
-The `/daily-cron` command name is retained for compatibility, but its job is long-horizon repository renewal. It should normally continue `work-ledgers/repo-renewal-long/` and use the `work` agent flow.
+The `/daily-cron` command name is retained for compatibility, but its job is long-horizon repository renewal. It should normally continue the local `.opencode/works/repo-renewal-long/` ledger and use the `work` agent flow.
 
 Harness gates:
 
@@ -39,7 +39,7 @@ Harness gates:
 3. Prefer safe, small, reversible edits.
 4. Apply only changes allowed by the safe auto-apply policy.
 5. Run the evaluation checklist before claiming completion.
-6. Update the durable work ledger, especially run log, decisions, findings, memory candidates, and handoff.
+6. Update the local work ledger, especially run log, decisions, findings, memory candidates, and handoff.
 7. Put uncertain cleanup in `cron-harness/cleanup-plan.md` or the active ledger; delete only when explicitly authorized and evidence-backed.
 
 ## Autonomy and Boundaries
@@ -108,7 +108,7 @@ Read `knowledge/INDEX.md` before research. If research is created or updated, up
 
 ```text
 cron-harness/              # Long-horizon renewal loop contract and checklists
-work-ledgers/              # Durable local runner work ledgers and handoffs
+.opencode/works/           # Local-only local runner work ledgers and handoffs
 agents/                    # Agent artifacts
 skills/                    # Skill artifacts
 knowledge/                 # Shared research base
@@ -118,7 +118,7 @@ guides/                    # Supporting guides
 
 Rules:
 - Preserve valuable canonical skills, agents, templates, and knowledge.
-- Keep local runner project configuration minimal, high-signal, and local-only unless a neutral tracked artifact is required.
+- Keep local runner project configuration minimal, high-signal, and local-only. Work ledgers belong under `.opencode/works/<work-name>/`; do not create root `work-ledgers/`.
 - Legacy local deployable prompt-copy directories are intentionally absent; canonical development artifacts live under `agents/`, `skills/`, `knowledge/`, `templates/`, `guides/`, and the harness.
 - Keep generated outputs small, high-signal, and reversible.
 

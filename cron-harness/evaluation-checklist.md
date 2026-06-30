@@ -15,7 +15,7 @@ Use before reporting completion for long-horizon repository renewal work.
 - [ ] The run has one clear primary renewal objective.
 - [ ] Changes are small, reversible, and high-signal.
 - [ ] Uncertain cleanup is recorded in `cleanup-plan.md` or the active work ledger instead of deleted.
-- [ ] The durable ledger has current state, run-log, decisions or findings, and handoff updates.
+- [ ] The local `.opencode/works/<work-name>/` ledger has current state, run-log, decisions or findings, and handoff updates.
 
 ## Prompt/Skill/Harness Quality
 
@@ -31,4 +31,4 @@ Use before reporting completion for long-horizon repository renewal work.
 - [ ] Relevant diffs were inspected.
 - [ ] Verification commands include directory, exit code, relevant output, and meaning.
 - [ ] Remaining risks are stated.
-- [ ] Next action is recorded in the durable handoff.
+- [ ] Next action is recorded in the local handoff.
