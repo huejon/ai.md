@@ -8,7 +8,7 @@ local runner web URL: `http://100.72.226.10:4096`.
 
 Active worker detected: yes at startup — PID `314101`, attached to the same local runner server, primary directory `global config repo`, prompt also requested inspection/update of `this repository`. It exited before final validation; only the local runner web server remained.
 
-Files currently awaiting commit are the ledger-route clarification records plus `WORKS.md`, which records `repo-renewal-long` as active with next action `harden no-commit guard`.
+Committed files from this coordination pass are the ledger-route clarification records plus `WORKS.md`, which records `repo-renewal-long` as active with next action `harden no-commit guard`.
 
 ## Validation Evidence — 2026-06-30 active-worker coordination
 
