@@ -1,5 +1,29 @@
 # Handoff — repo-renewal-long
 
+## Current State — 2026-06-30 memory candidate normalization
+
+This run selected primary loop state `learn` with supporting `apply` and `evaluate` actions, and completed one narrow renewal objective: normalize the active `memory-candidates.md` policy candidate so it no longer points future workers at the obsolete `prior local-overlay policy file` placeholder.
+
+Changed files are limited to `work-ledgers/repo-renewal-long/` ledger updates and one new finding, `work-ledgers/repo-renewal-long/findings/2026-06-30-memory-candidate-normalization.md`. No deletion, deploy, publish, production mutation, external message, or `LICENSE` edit occurred. OpenCode did not commit or push; the active cron instruction requires coordinating process commit/push after validation passes.
+
+## Validation Evidence — 2026-06-30 memory candidate normalization
+
+- Startup protocol completed: work command reference loaded by the requested Python command; `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, `cron-harness/README.md`, `cron-harness/evaluation-checklist.md`, active ledger files, and `WORKS.md` were read; `git log --oneline -10` and `date` were run.
+- Initial `rtk git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; output `## main...origin/main`.
+- `rtk git diff --check` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output.
+- `rtk git diff -- LICENSE` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output.
+- `rtk git diff --name-status` and `rtk git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed only intended `work-ledgers/repo-renewal-long/` modifications and the new finding.
+- Reviews: `review-qwen` PASS and `review-glm` PASS; non-blocking validation-wording notes were addressed.
+- Judges: `judge-qwen` ACCEPT and `judge-glm` ACCEPT; no required fixes.
+- Final rerun after judge evidence update: `rtk git diff --check`, `rtk git diff -- LICENSE`, `rtk git diff --name-status`, and `rtk git status --short --branch --untracked-files=all` all exited 0; status remained limited to six modified ledger files and one new finding under `work-ledgers/repo-renewal-long/`.
+- Coordinating process finalization reran `git diff --check`, `git diff -- LICENSE`, `git status --short --untracked-files=all`, and `git diff --name-status`: all exited 0 before commit/push; only the OpenCode web server was active, with no competing worker process.
+
+## Next Action — 2026-06-30
+
+For the next continuation, start with `cron-harness/README.md` and this handoff, then choose a fresh single objective. Suggested next objective: inspect `context.md` for remaining historical local-overlay wording and decide whether it should be normalized or kept as historical evidence.
+
+---
+
 ## Current State — 2026-06-30 active scope refresh
 
 This run selected primary loop state `learn` with supporting `apply` and `evaluate` actions, and completed one narrow renewal objective: refresh `work-ledgers/repo-renewal-long/work.md` so it is a reusable active scope contract for future long-horizon renewal continuations, not a stale checklist for the completed legacy cleanup run.

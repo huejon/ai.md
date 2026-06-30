@@ -1,5 +1,55 @@
 # Run Log
 
+## 2026-06-30 — Memory candidate normalization
+
+### Startup and inspection
+
+- Loaded `/var/home/core/.config/opencode/references/work-command.md` with the Python command requested by the user.
+- Read `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, `cron-harness/README.md`, `cron-harness/evaluation-checklist.md`, `WORKS.md`, and the active `work-ledgers/repo-renewal-long/` handoff/state/run-log/plan/decision/memory/work files.
+- Ran `git log --oneline -10` and `date` in `/var/home/core/workspace/jonloureiro/ai.md`; latest commit shown was `2b8b391 chore: refresh renewal ledger scope`, and `date` returned `Tue Jun 30 09:01:26 AM UTC 2026`.
+- Inspected `work-ledgers/repo-renewal-long/` and stale local-overlay references before editing.
+- Initial `rtk git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; output `## main...origin/main`.
+
+### Objective
+
+- Primary loop state: `learn`; supporting actions: `apply` and `evaluate`.
+- Narrow objective: normalize the active `memory-candidates.md` policy candidate so future renewal workers inherit neutral current policy wording rather than an obsolete placeholder from local-overlay cleanup history.
+
+### Changes
+
+- Updated `work-ledgers/repo-renewal-long/memory-candidates.md` with neutral repository policy wording.
+- Added `work-ledgers/repo-renewal-long/findings/2026-06-30-memory-candidate-normalization.md` with evidence, acceptance criteria, and rollback.
+- Updated `state.md`, `plan.md`, `decisions.md`, `run-log.md`, and `handoff.md` for this run.
+- No files were deleted; `LICENSE` was not edited; OpenCode did not commit or push. The active cron instruction requires coordinating process commit/push after validation passes.
+
+### Validation
+
+- `rtk git diff --check` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output, proving no diff whitespace errors or conflict markers.
+- `rtk git diff -- LICENSE` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output, proving `LICENSE` has no diff.
+- `rtk git diff --name-status` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; output showed modified ledger files and the new finding only under `work-ledgers/repo-renewal-long/`.
+- `rtk git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; output showed branch `main...origin/main`, six modified ledger files, and one new finding file.
+- `rtk git diff -- work-ledgers/repo-renewal-long` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed the intended ledger-only normalization diff: 77 insertions and 1 deletion across tracked ledger files, plus the new finding file present in status.
+
+### Reviews
+
+- `review-qwen`: PASS. Non-blocking notes: replace pending validation text with actual final command evidence and then run judges.
+- `review-glm`: PASS. Non-blocking note: align handoff/run-log validation wording; fixed in this ledger update.
+
+### Judges
+
+- `judge-qwen`: ACCEPT. Confirmed ledger-only scope, no deletions, no `LICENSE` diff, no commit/push, obsolete memory-candidate placeholder removed, and no required fixes.
+- `judge-glm`: ACCEPT. Independently reran validation, confirmed the diff is limited to six modified ledger files plus one new finding, and noted no required fixes.
+- Final rerun after judge evidence update: `rtk git diff --check` exit 0 with no output; `rtk git diff -- LICENSE` exit 0 with no output; `rtk git diff --name-status` exit 0 showing only modified `work-ledgers/repo-renewal-long/` tracked files; `rtk git status --short --branch --untracked-files=all` exit 0 showing branch `main...origin/main`, six modified ledger files, and one new finding under `work-ledgers/repo-renewal-long/`.
+
+### Coordinating process finalization
+
+- OpenCode web URL: `http://100.72.226.10:4096`.
+- Active worker check before final commit: `ps -eo pid,ppid,etime,cmd | grep -E '[o]pencode' || true` exit 0; only the OpenCode web server was present, with no competing renewal worker.
+- Final coordinating checks before commit/push: `git diff --check` exit 0; `git diff -- LICENSE` exit 0 with no output; `git status --short --untracked-files=all` exit 0 showing only the intended ledger files; `git diff --name-status` exit 0 showing only tracked ledger modifications.
+- Active cron instruction explicitly requires commit and push after validation passes, so coordinating process will commit/push this validated ledger-only update.
+
+---
+
 ## 2026-06-30 — Active scope refresh
 
 ### Startup and inspection

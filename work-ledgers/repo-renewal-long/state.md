@@ -1,5 +1,13 @@
 # State
 
+## 2026-06-30 — memory candidate normalization
+
+Primary loop state: `learn`; supporting actions: `apply` and `evaluate`.
+
+Current renewal objective completed: normalize the active memory candidate that still referenced `prior local-overlay policy file`, replacing it with neutral repository policy wording tied to tracked root/harness policy and active-instruction commit/push precedence. Historical cleanup decisions remain preserved in `decisions.md` and older run-log entries.
+
+---
+
 ## 2026-06-30 — active scope refresh
 
 Primary loop state: `learn`; supporting actions: `apply` and `evaluate`.

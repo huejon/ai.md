@@ -1,5 +1,15 @@
 # Plan
 
+## 2026-06-30 — Memory candidate normalization
+
+1. Complete mandatory startup reads and command evidence. Done.
+2. Inspect the active handoff, memory candidates, decisions, work scope, harness, board, and stale placeholder references. Done.
+3. Select one narrow objective: normalize obsolete local-overlay wording in `memory-candidates.md` without deleting historical evidence. Done.
+4. Apply a small reversible ledger-only edit and add a dated finding with evidence, acceptance criteria, and rollback. Done.
+5. Validate diff safety, license preservation, repository status, reviews, and judges before final response. Done.
+
+---
+
 ## 2026-06-30 — Active scope refresh
 
 1. Complete mandatory startup reads and command evidence. Done.

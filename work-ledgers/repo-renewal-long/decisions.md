@@ -1,5 +1,17 @@
 # Decisions
 
+## 2026-06-30 — Normalize active memory candidate policy wording
+
+Decision: replace the active `memory-candidates.md` bullet that referenced `prior local-overlay policy file` with neutral repository policy wording.
+
+Rationale: the placeholder belongs to earlier local-overlay cleanup history, while active future runs need a durable policy pointer that still works after the tracked overlay was removed. The root policy, README, and harness now carry the tracked commit/push precedence rules; local-only overlay files may supplement them when present.
+
+Evidence: `memory-candidates.md` now points to root `AGENTS.md`, `README.md`, `cron-harness/README.md`, and any local-only runner overlay, while preserving the requirement that routine direct commit/push needs active-instruction permission, validation, and ledger evidence.
+
+Rollback: restore the prior memory candidate from git history and remove `findings/2026-06-30-memory-candidate-normalization.md` if that placeholder is intentionally reintroduced as an active policy reference.
+
+---
+
 ## 2026-06-30 — Keep `work.md` as reusable active scope, not completed-run history
 
 Decision: refresh `work-ledgers/repo-renewal-long/work.md` so it describes the current recurring renewal contract instead of the completed legacy cleanup task.
