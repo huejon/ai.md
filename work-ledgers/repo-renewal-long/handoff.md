@@ -4,7 +4,7 @@
 
 This run selected primary loop state `learn` with supporting `apply` and `evaluate` actions, and completed one narrow renewal objective: refresh `work-ledgers/repo-renewal-long/context.md` so active renewal context is current and reusable while cleanup-specific local-overlay/deletion details remain historical evidence in dated ledger entries.
 
-Changed files are limited to `work-ledgers/repo-renewal-long/` ledger updates and one new finding, `work-ledgers/repo-renewal-long/findings/2026-06-30-context-refresh.md`. No deletion, deploy, publish, production mutation, external message, or `LICENSE` edit occurred. OpenCode did not commit or push; the active cron instruction requires coordinating process commit/push after validation passes.
+Changed files are limited to `work-ledgers/repo-renewal-long/` ledger updates and one new finding, `work-ledgers/repo-renewal-long/findings/2026-06-30-context-refresh.md`. No deletion, deploy, publish, production mutation, external message, or `LICENSE` edit occurred. local runner did not commit or push; the active cron instruction requires coordinating process commit/push after validation passes.
 
 ## Validation Evidence — 2026-06-30 context refresh
 
@@ -14,9 +14,9 @@ Changed files are limited to `work-ledgers/repo-renewal-long/` ledger updates an
 - `rtk git diff --name-status` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed only modified tracked ledger files under `work-ledgers/repo-renewal-long/`.
 - `rtk git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed branch `main...origin/main`, six modified ledger files, and one new finding under `work-ledgers/repo-renewal-long/`.
 - Reviews: `review-qwen` PASS, `review-glm` PASS, and `review-kimi` PASS; Kimi's non-blocking wording note was fixed.
-- Judges: `judge-qwen` ACCEPT and `judge-glm` ACCEPT WITH NOTES; GLM's non-blocking notes about self-referential diff-stat drift and pending judge wording were fixed in the ledger.
+- Judges: `judge panel A` ACCEPT and `judge panel B` ACCEPT WITH NOTES; panel B's non-blocking notes about self-referential diff-stat drift and pending judge wording were fixed in the ledger.
 - Final rerun after judge ledger update: `rtk git diff --check`, `rtk git diff -- LICENSE`, `rtk git diff --name-status`, and `rtk git status --short --branch --untracked-files=all` all exited 0; status remained limited to six modified ledger files and one new finding under `work-ledgers/repo-renewal-long/`.
-- Coordinating process finalization reran `ps -eo pid,ppid,etime,cmd | grep -E '[o]pencode' || true`, `git diff --check`, `git diff -- LICENSE`, `git status --short --untracked-files=all`, and `git diff --name-status`: all exited 0 before commit/push; only the OpenCode web server was active, with no competing worker process.
+- Coordinating process finalization reran `ps -eo pid,ppid,etime,cmd | grep -E '[local-runner]' || true`, `git diff --check`, `git diff -- LICENSE`, `git status --short --untracked-files=all`, and `git diff --name-status`: all exited 0 before commit/push; only the local runner web server was active, with no competing worker process.
 
 ## Next Action — 2026-06-30
 
@@ -28,7 +28,7 @@ For the next continuation, start with `cron-harness/README.md` and this handoff,
 
 This run selected primary loop state `learn` with supporting `apply` and `evaluate` actions, and completed one narrow renewal objective: normalize the active `memory-candidates.md` policy candidate so it no longer points future workers at the obsolete `prior local-overlay policy file` placeholder.
 
-Changed files are limited to `work-ledgers/repo-renewal-long/` ledger updates and one new finding, `work-ledgers/repo-renewal-long/findings/2026-06-30-memory-candidate-normalization.md`. No deletion, deploy, publish, production mutation, external message, or `LICENSE` edit occurred. OpenCode did not commit or push; the active cron instruction requires coordinating process commit/push after validation passes.
+Changed files are limited to `work-ledgers/repo-renewal-long/` ledger updates and one new finding, `work-ledgers/repo-renewal-long/findings/2026-06-30-memory-candidate-normalization.md`. No deletion, deploy, publish, production mutation, external message, or `LICENSE` edit occurred. local runner did not commit or push; the active cron instruction requires coordinating process commit/push after validation passes.
 
 ## Validation Evidence — 2026-06-30 memory candidate normalization
 
@@ -38,9 +38,9 @@ Changed files are limited to `work-ledgers/repo-renewal-long/` ledger updates an
 - `rtk git diff -- LICENSE` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output.
 - `rtk git diff --name-status` and `rtk git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed only intended `work-ledgers/repo-renewal-long/` modifications and the new finding.
 - Reviews: `review-qwen` PASS and `review-glm` PASS; non-blocking validation-wording notes were addressed.
-- Judges: `judge-qwen` ACCEPT and `judge-glm` ACCEPT; no required fixes.
+- Judges: `judge panel A` ACCEPT and `judge panel B` ACCEPT; no required fixes.
 - Final rerun after judge evidence update: `rtk git diff --check`, `rtk git diff -- LICENSE`, `rtk git diff --name-status`, and `rtk git status --short --branch --untracked-files=all` all exited 0; status remained limited to six modified ledger files and one new finding under `work-ledgers/repo-renewal-long/`.
-- Coordinating process finalization reran `git diff --check`, `git diff -- LICENSE`, `git status --short --untracked-files=all`, and `git diff --name-status`: all exited 0 before commit/push; only the OpenCode web server was active, with no competing worker process.
+- Coordinating process finalization reran `git diff --check`, `git diff -- LICENSE`, `git status --short --untracked-files=all`, and `git diff --name-status`: all exited 0 before commit/push; only the local runner web server was active, with no competing worker process.
 
 ## Next Action — 2026-06-30
 
@@ -56,7 +56,7 @@ Changed files are limited to `work-ledgers/repo-renewal-long/` ledger updates an
 
 ## Validation Evidence — 2026-06-30 active scope refresh
 
-- `python - <<'PY' ... Path('~/.config/opencode/references/work-command.md') ... PY` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; printed the requested work command reference.
+- `python - <<'PY' ... Path('global config repo reference file') ... PY` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; printed the requested work command reference.
 - `rtk git log --oneline -10` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; latest commit shown was `6812e03 chore: harden renewal commit guard`.
 - `date` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; output `Tue Jun 30 08:01:30 AM UTC 2026`.
 - `rtk git diff --check` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output.
@@ -64,8 +64,8 @@ Changed files are limited to `work-ledgers/repo-renewal-long/` ledger updates an
 - `rtk git diff -- work-ledgers/repo-renewal-long` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed only intended ledger scope/finding updates before final run-log/handoff evidence was added.
 - `rtk git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed branch `main...origin/main`, modified ledger files, and one new finding file.
 - Reviews: `review-qwen` PASS and `review-glm` PASS.
-- Judges: `judge-qwen` ACCEPT and `judge-glm` ACCEPT WITH NOTES; notes were non-blocking and the actionable plan/citation notes were fixed.
-- Coordinating process finalization: the attached OpenCode run timed out at 600 seconds, but no OpenCode worker remained afterward; follow-up Qwen and GLM model judge runs both accepted the diff. Final `git diff --check`, `git diff -- LICENSE`, and `git status --short --untracked-files=all` were rerun before commit/push.
+- Judges: `judge panel A` ACCEPT and `judge panel B` ACCEPT WITH NOTES; notes were non-blocking and the actionable plan/citation notes were fixed.
+- Coordinating process finalization: the attached local runner run timed out at 600 seconds, but no local runner worker remained afterward; follow-up panel A and panel B model judge runs both accepted the diff. Final `git diff --check`, `git diff -- LICENSE`, and `git status --short --untracked-files=all` were rerun before commit/push.
 - Final rerun after judge-note fixes: `rtk git diff --check` exit 0 with no output; `rtk git diff -- LICENSE` exit 0 with no output; `rtk git status --short --branch --untracked-files=all` exit 0 showing only modified `work-ledgers/repo-renewal-long/` files and the new active-scope finding.
 
 ## Next Action — 2026-06-30
@@ -87,7 +87,7 @@ Changed files in this run are limited to `cron-harness/README.md`, `cron-harness
 - `git diff -- cron-harness/README.md cron-harness/evaluation-checklist.md work-ledgers/repo-renewal-long WORKS.md` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed only intended harness/checklist/ledger/board edits.
 - `git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed only intended modified files.
 - Reviews: `review-qwen` PASS; `review-glm` PASS conditional on evidence; `review-kimi` FAIL only for pending evidence/commit authorization citation, fixed by this ledger update.
-- Judges: `judge-qwen` ACCEPT; `judge-glm` ACCEPT WITH NOTES. Both accepted readiness to commit/push after validation.
+- Judges: `judge panel A` ACCEPT; `judge panel B` ACCEPT WITH NOTES. Both accepted readiness to commit/push after validation.
 
 ## Next Action — 2026-06-30
 
@@ -108,7 +108,7 @@ Committed files from this coordination pass are the ledger-route clarification r
 ## Validation Evidence — 2026-06-30 active-worker coordination
 
 - `curl -fsS -I http://100.72.226.10:4096`: exit 0; returned `HTTP/1.1 200 OK`.
-- `ps -eo pid,ppid,etime,cmd | grep -E '[o]pencode' || true`: exit 0; startup showed server PID `284951` and active worker PID `314101`; final check showed only the server.
+- `ps -eo pid,ppid,etime,cmd | grep -E '[local-runner]' || true`: exit 0; startup showed server PID `284951` and active worker PID `314101`; final check showed only the server.
 - `git diff --check`: exit 0.
 - `git diff -- LICENSE`: exit 0; no output.
 - `git status --short --untracked-files=all`: exit 0; showed the expected ledger updates plus untracked `WORKS.md` before final commit.
@@ -167,7 +167,7 @@ Executed in `this repository`:
 - `git diff -- LICENSE` — exit 0; no output. Proves `LICENSE` was preserved without modifications.
 - `git status --short` — exit 0; shows expected uncommitted deletions/modifications and two new ledger files. Proves local runner did not commit/push and leaves final staging/commit/push to coordinating process.
 - Review panel: `review-qwen` PASS, `review-glm` PASS, `review-kimi` initial FAIL for empty local directories; fixed by removing empty directories.
-- Judges: `judge-qwen` ACCEPT and `judge-glm` ACCEPT.
+- Judges: `judge panel A` ACCEPT and `judge panel B` ACCEPT.
 
 Additional 2026-06-30 neutralization validation in `this repository`:
 

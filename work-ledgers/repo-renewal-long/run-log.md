@@ -4,7 +4,7 @@
 
 ### Startup and inspection
 
-- Loaded `/var/home/core/.config/opencode/references/work-command.md` with the Python command requested by the user.
+- Loaded `global config repo reference file` with the Python command requested by the user.
 - Read `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, `cron-harness/README.md`, `cron-harness/evaluation-checklist.md`, `WORKS.md`, and active `work-ledgers/repo-renewal-long/` handoff/state/plan/run-log/decision/memory/context files.
 - Ran `rtk git log --oneline -10`, `date`, and `rtk git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`; latest commit shown was `0ee5712 chore: normalize renewal memory candidate`, date returned `Tue Jun 30 10:01:48 AM UTC 2026`, and initial status was `## main...origin/main`.
 - Inspected `work-ledgers/repo-renewal-long/` and remaining local-overlay/legacy references before editing.
@@ -19,7 +19,7 @@
 - Updated `work-ledgers/repo-renewal-long/context.md` to separate active renewal context from historical cleanup context.
 - Added `work-ledgers/repo-renewal-long/findings/2026-06-30-context-refresh.md` with evidence, acceptance criteria, and rollback.
 - Updated `state.md`, `plan.md`, `decisions.md`, `run-log.md`, and `handoff.md` for this run.
-- No files were deleted; `LICENSE` was not edited; OpenCode did not commit or push. The active cron instruction requires coordinating process commit/push after validation passes.
+- No files were deleted; `LICENSE` was not edited; local runner did not commit or push. The active cron instruction requires coordinating process commit/push after validation passes.
 
 ### Validation
 
@@ -37,14 +37,14 @@
 
 ### Judges
 
-- `judge-qwen`: ACCEPT. Confirmed the objective is meaningful, scope is limited to `work-ledgers/repo-renewal-long/`, validation passed, no deletions/commit/push occurred, and no required fixes remain.
-- `judge-glm`: ACCEPT WITH NOTES. Independently reran validation and confirmed the diff is scoped, reversible, `LICENSE`-safe, and history-preserving. Non-blocking notes about self-referential diff-stat drift and pending judge wording were addressed in this ledger update.
+- `judge panel A`: ACCEPT. Confirmed the objective is meaningful, scope is limited to `work-ledgers/repo-renewal-long/`, validation passed, no deletions/commit/push occurred, and no required fixes remain.
+- `judge panel B`: ACCEPT WITH NOTES. Independently reran validation and confirmed the diff is scoped, reversible, `LICENSE`-safe, and history-preserving. Non-blocking notes about self-referential diff-stat drift and pending judge wording were addressed in this ledger update.
 - Final rerun after judge ledger update: `rtk git diff --check` exit 0 with no output; `rtk git diff -- LICENSE` exit 0 with no output; `rtk git diff --name-status` exit 0 showing only modified tracked ledger files; `rtk git status --short --branch --untracked-files=all` exit 0 showing branch `main...origin/main`, six modified ledger files, and one new finding under `work-ledgers/repo-renewal-long/`.
 
 ### Coordinating process finalization
 
-- OpenCode web URL: `http://100.72.226.10:4096`.
-- Active worker check before final commit: `ps -eo pid,ppid,etime,cmd | grep -E '[o]pencode' || true` exit 0; only the OpenCode web server was present, with no competing renewal worker.
+- local runner web URL: `http://100.72.226.10:4096`.
+- Active worker check before final commit: `ps -eo pid,ppid,etime,cmd | grep -E '[local-runner]' || true` exit 0; only the local runner web server was present, with no competing renewal worker.
 - Final coordinating checks before commit/push: `git diff --check` exit 0; `git diff -- LICENSE` exit 0 with no output; `git status --short --untracked-files=all` exit 0 showing only the intended ledger files; `git diff --name-status` exit 0 showing only tracked ledger modifications.
 - Active cron instruction explicitly requires commit and push after validation passes, so coordinating process will commit/push this validated ledger-only update.
 
@@ -54,7 +54,7 @@
 
 ### Startup and inspection
 
-- Loaded `/var/home/core/.config/opencode/references/work-command.md` with the Python command requested by the user.
+- Loaded `global config repo reference file` with the Python command requested by the user.
 - Read `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, `cron-harness/README.md`, `cron-harness/evaluation-checklist.md`, `WORKS.md`, and the active `work-ledgers/repo-renewal-long/` handoff/state/run-log/plan/decision/memory/work files.
 - Ran `git log --oneline -10` and `date` in `/var/home/core/workspace/jonloureiro/ai.md`; latest commit shown was `2b8b391 chore: refresh renewal ledger scope`, and `date` returned `Tue Jun 30 09:01:26 AM UTC 2026`.
 - Inspected `work-ledgers/repo-renewal-long/` and stale local-overlay references before editing.
@@ -70,7 +70,7 @@
 - Updated `work-ledgers/repo-renewal-long/memory-candidates.md` with neutral repository policy wording.
 - Added `work-ledgers/repo-renewal-long/findings/2026-06-30-memory-candidate-normalization.md` with evidence, acceptance criteria, and rollback.
 - Updated `state.md`, `plan.md`, `decisions.md`, `run-log.md`, and `handoff.md` for this run.
-- No files were deleted; `LICENSE` was not edited; OpenCode did not commit or push. The active cron instruction requires coordinating process commit/push after validation passes.
+- No files were deleted; `LICENSE` was not edited; local runner did not commit or push. The active cron instruction requires coordinating process commit/push after validation passes.
 
 ### Validation
 
@@ -87,14 +87,14 @@
 
 ### Judges
 
-- `judge-qwen`: ACCEPT. Confirmed ledger-only scope, no deletions, no `LICENSE` diff, no commit/push, obsolete memory-candidate placeholder removed, and no required fixes.
-- `judge-glm`: ACCEPT. Independently reran validation, confirmed the diff is limited to six modified ledger files plus one new finding, and noted no required fixes.
+- `judge panel A`: ACCEPT. Confirmed ledger-only scope, no deletions, no `LICENSE` diff, no commit/push, obsolete memory-candidate placeholder removed, and no required fixes.
+- `judge panel B`: ACCEPT. Independently reran validation, confirmed the diff is limited to six modified ledger files plus one new finding, and noted no required fixes.
 - Final rerun after judge evidence update: `rtk git diff --check` exit 0 with no output; `rtk git diff -- LICENSE` exit 0 with no output; `rtk git diff --name-status` exit 0 showing only modified `work-ledgers/repo-renewal-long/` tracked files; `rtk git status --short --branch --untracked-files=all` exit 0 showing branch `main...origin/main`, six modified ledger files, and one new finding under `work-ledgers/repo-renewal-long/`.
 
 ### Coordinating process finalization
 
-- OpenCode web URL: `http://100.72.226.10:4096`.
-- Active worker check before final commit: `ps -eo pid,ppid,etime,cmd | grep -E '[o]pencode' || true` exit 0; only the OpenCode web server was present, with no competing renewal worker.
+- local runner web URL: `http://100.72.226.10:4096`.
+- Active worker check before final commit: `ps -eo pid,ppid,etime,cmd | grep -E '[local-runner]' || true` exit 0; only the local runner web server was present, with no competing renewal worker.
 - Final coordinating checks before commit/push: `git diff --check` exit 0; `git diff -- LICENSE` exit 0 with no output; `git status --short --untracked-files=all` exit 0 showing only the intended ledger files; `git diff --name-status` exit 0 showing only tracked ledger modifications.
 - Active cron instruction explicitly requires commit and push after validation passes, so coordinating process will commit/push this validated ledger-only update.
 
@@ -104,7 +104,7 @@
 
 ### Startup and inspection
 
-- Loaded `/var/home/core/.config/opencode/references/work-command.md` with the Python command requested by the user.
+- Loaded `global config repo reference file` with the Python command requested by the user.
 - Read `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, `cron-harness/README.md`, `cron-harness/evaluation-checklist.md`, `cron-harness/loop-engineering-checklist.md`, `cron-harness/cleanup-plan.md`, `WORKS.md`, and the active `work-ledgers/repo-renewal-long/` handoff/state/plan/decision/memory/work files.
 - Ran `git log --oneline -10` and `date` in `/var/home/core/workspace/jonloureiro/ai.md`.
 - Inspected `work-ledgers/repo-renewal-long/` and `cron-harness/` before editing.
@@ -119,11 +119,11 @@
 - Updated `work-ledgers/repo-renewal-long/work.md` from completed cleanup scope to reusable active scope contract.
 - Added `work-ledgers/repo-renewal-long/findings/2026-06-30-active-scope-refresh.md` with evidence, acceptance criteria, and rollback.
 - Updated `state.md`, `plan.md`, `decisions.md`, `memory-candidates.md`, `run-log.md`, and `handoff.md` for this run.
-- No files were deleted; `LICENSE` was not edited; OpenCode did not commit or push. The active cron instruction requires coordinating process commit/push after validation passes.
+- No files were deleted; `LICENSE` was not edited; local runner did not commit or push. The active cron instruction requires coordinating process commit/push after validation passes.
 
 ### Validation
 
-- `python - <<'PY' ... Path('~/.config/opencode/references/work-command.md') ... PY` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; printed the work command reference.
+- `python - <<'PY' ... Path('global config repo reference file') ... PY` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; printed the work command reference.
 - `rtk git log --oneline -10` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; latest commit shown was `6812e03 chore: harden renewal commit guard`.
 - `date` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; output `Tue Jun 30 08:01:30 AM UTC 2026`.
 - `rtk git diff -- work-ledgers/repo-renewal-long` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed only intended ledger edits before this run-log/handoff update.
@@ -139,13 +139,13 @@
 
 ### Judges
 
-- `judge-qwen`: ACCEPT. Confirmed ledger-only scope, no `LICENSE` diff, no deletions, no commit/push, and objective quality.
-- `judge-glm`: ACCEPT WITH NOTES. Confirmed final checks and readiness; non-blocking notes were to mark `plan.md` step 5 done, clarify the pre-refresh citation, and leave older memory-candidate wording to the next run. The first two notes were fixed in this ledger update; the older memory-candidate wording remains the recorded next objective.
+- `judge panel A`: ACCEPT. Confirmed ledger-only scope, no `LICENSE` diff, no deletions, no commit/push, and objective quality.
+- `judge panel B`: ACCEPT WITH NOTES. Confirmed final checks and readiness; non-blocking notes were to mark `plan.md` step 5 done, clarify the pre-refresh citation, and leave older memory-candidate wording to the next run. The first two notes were fixed in this ledger update; the older memory-candidate wording remains the recorded next objective.
 
 ### Coordinating process finalization
 
-- OpenCode attached run exit: 124 from the coordinating process timeout after 600 seconds; post-timeout `ps -eo pid,ppid,etime,cmd | grep -E '[o]pencode' || true` showed only the web server, so no active worker remained.
-- Follow-up judge runs completed: Qwen returned ACCEPT; GLM returned ACCEPT. OpenCode warned that `judge-qwen`/`judge-glm` are subagents and fell back to the default agent using the requested Qwen/GLM models, so the model-level panel evidence is present even though direct subagent invocation was not accepted by the CLI.
+- local runner attached run exit: 124 from the coordinating process timeout after 600 seconds; post-timeout `ps -eo pid,ppid,etime,cmd | grep -E '[local-runner]' || true` showed only the web server, so no active worker remained.
+- Follow-up judge runs completed: panel A returned ACCEPT; panel B returned ACCEPT. local runner warned that `judge panel A`/`judge panel B` are subagents and fell back to the default agent using the requested panel A/panel B models, so the model-level panel evidence is present even though direct subagent invocation was not accepted by the CLI.
 - Coordinating process reran final checks and committed/pushed because the active cron instruction explicitly requires commit and push when validation passes.
 - Final rerun after judge-note fixes: `rtk git diff --check` exit 0 with no output; `rtk git diff -- LICENSE` exit 0 with no output; `rtk git status --short --branch --untracked-files=all` exit 0 showing only modified `work-ledgers/repo-renewal-long/` files and the new active-scope finding; `rtk git diff --name-status` exit 0 showing only modified tracked ledger files.
 
@@ -155,10 +155,10 @@
 
 ### Startup and inspection
 
-- Loaded `/var/home/core/.config/opencode/references/work-command.md` with the Python command requested by the user.
+- Loaded `global config repo reference file` with the Python command requested by the user.
 - Read `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, `cron-harness/README.md`, `cron-harness/evaluation-checklist.md`, `WORKS.md`, and the active `work-ledgers/repo-renewal-long/` handoff/state/plan/decision/memory files.
 - Ran `git log --oneline -10` and `date` in `/var/home/core/workspace/jonloureiro/ai.md`.
-- Inspected `cron-harness/`, `work-ledgers/repo-renewal-long/`, `.opencode/works/`, and commit/push guard references before editing.
+- Inspected `cron-harness/`, `work-ledgers/repo-renewal-long/`, `local overlay work dirs/`, and commit/push guard references before editing.
 
 ### Objective
 
@@ -179,7 +179,7 @@
 - `git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed the branch on `main...origin/main` with only the intended modified harness/checklist/ledger/board files.
 - Review panel: `review-qwen` PASS; `review-glm` PASS conditional on replacing pending validation evidence; `review-kimi` FAIL only because validation evidence was still pending and the active commit/push request was not cited. This section and the handoff were updated to satisfy those findings.
 - Active instruction evidence: the user request for this run includes `commit/push if validation passes`, so post-validation commit/push is explicitly authorized for this run.
-- Judges: `judge-qwen` ACCEPT; `judge-glm` ACCEPT WITH NOTES. Both independently confirmed diff scope, no `LICENSE` diff, `git diff --check` success, and readiness to commit/push under the active instruction.
+- Judges: `judge panel A` ACCEPT; `judge panel B` ACCEPT WITH NOTES. Both independently confirmed diff scope, no `LICENSE` diff, `git diff --check` success, and readiness to commit/push under the active instruction.
 - Remaining unknown before final git step: remote push acceptance. If push succeeds, no known task blocker remains.
 
 ---
@@ -207,7 +207,7 @@
 ### Verification
 
 - `curl -fsS -I http://100.72.226.10:4096`: exit 0; returned `HTTP/1.1 200 OK`.
-- `ps -eo pid,ppid,etime,cmd | grep -E '[o]pencode' || true`: exit 0; startup showed server PID `284951` and active worker PID `314101`; final check showed only the server.
+- `ps -eo pid,ppid,etime,cmd | grep -E '[local-runner]' || true`: exit 0; startup showed server PID `284951` and active worker PID `314101`; final check showed only the server.
 - `local-runner session list --format json`: exit 0; recent ai.md sessions listed, latest `Daily ai.md long-horizon renewal`.
 - `git diff --check`: exit 0.
 - `git diff -- LICENSE`: exit 0; no output.
@@ -287,7 +287,7 @@
 - Initial review panel found a root policy contradiction and missing handoff validation evidence.
 - Fixed both issues by reconciling root policy wording and recording validation evidence.
 - Post-fix `review-qwen`, `review-glm`, and `review-kimi` returned PASS.
-- `judge-qwen` returned ACCEPT; `judge-glm` returned ACCEPT WITH NOTES.
+- `judge panel A` returned ACCEPT; `judge panel B` returned ACCEPT WITH NOTES.
 - Previous review summary was removed during the later legacy-directory cleanup because it described deleted local deployment-copy directories as active.
 
 ## 2026-06-30 — Legacy directory removal and local runner overlay pruning
@@ -330,8 +330,8 @@
 - Final `git diff --check` in `this repository`: exit 0; no output. Proves no whitespace errors or conflict markers.
 - Final `git diff -- LICENSE` in `this repository`: exit 0; no output. Proves `LICENSE` has no diff.
 - Final `git status --short` in `this repository`: exit 0; showed expected uncommitted deletions of legacy local directories and `prior local-overlay agent-copy directory`, expected doc/ledger modifications, and two new ledger artifacts. Proves local runner did not commit/push.
-- `judge-qwen`: ACCEPT.
-- `judge-glm`: ACCEPT.
+- `judge panel A`: ACCEPT.
+- `judge panel B`: ACCEPT.
 
 ## 2026-06-30 — Vendor/tool-name neutralization
 
