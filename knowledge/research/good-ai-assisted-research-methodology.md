@@ -59,18 +59,18 @@ Track publication bias, language bias, sponsor/conflict signals, population/cont
 
 ## Maintenance Rules for This Repository
 
-- Keep `ai.md/knowledge` as curated research and methodology, not active OpenCode prompts or copied config.
+- Keep `ai.md/knowledge` as curated research and methodology, not active runtime prompts or copied configuration.
 - Mark each research file with `Last updated`, `Status`, and an index row containing freshness and value.
 - Treat files older than 3 months as `Aging`; older than 6 months as `Stale` until key claims are re-verified.
 - If a source path no longer exists locally, classify the file as valuable-but-needs-maintenance rather than silently trusting it.
 - Prefer adding one concise methodology note over duplicating source material.
 - Record research evidence in the active `.opencode/works/<slug>/` ledger before claiming completion.
 
-## Implications for OpenCode
+## Implications for Downstream Consumers
 
-- OpenCode should load only distilled operational guidance: read `knowledge/INDEX.md` when a task needs research, use curated notes as sources, and avoid copying `knowledge/` into prompts.
+- Downstream runtime systems should load only distilled operational guidance: read `knowledge/INDEX.md` when a task needs research, use curated notes as sources, and avoid copying `knowledge/` into prompts.
 - A knowledge-curation cron should maintain this repository's evidence base.
-- A separate config-application cron should inspect this repository's curated changes and selectively update `~/.config/opencode`.
+- Separate operator-owned application automation may inspect this repository's curated changes and selectively update external runtime configuration.
 
 ## Limits and Re-check Path
 

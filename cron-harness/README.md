@@ -80,8 +80,8 @@ Do not preserve historical work solely because it exists. Preserve artifacts bec
 
 This section defines recurring responsibilities and boundaries. It does not by itself install a scheduler, daemon, or external automation.
 
-- **ai.md knowledge-curation cron**: operates in this repository. It refreshes research notes, classifies freshness/value, maintains `knowledge/INDEX.md`, updates harness/checklists, and records evidence in `.opencode/works/`. It may propose distilled OpenCode guidance but should not bulk-copy active config artifacts into this repo.
-- **config-opencode application cron**: operates in `~/.config/opencode`. It reads curated `ai.md` knowledge, applies only minimal operational changes to active OpenCode agents/commands/skills/references/prompts, validates the config repo, and records its own local ledger.
+- **ai.md knowledge-curation cron**: operates in this repository. It refreshes research notes, classifies freshness/value, maintains `knowledge/INDEX.md`, updates harness/checklists, and records evidence in `.opencode/works/`. It may propose distilled runtime guidance but should not bulk-copy downstream configuration artifacts into this repo.
+- **Downstream application automation**: operates outside this repository under operator control. It may read curated `ai.md` knowledge, apply only minimal operational changes to external runtime artifacts, validate its own workspace, and record its own ledger.
 
 When a run touches research methodology, use the current methodology note as the default quality gate and record source hierarchy, search protocol, AI-audit checks, and review/judge evidence.
 

@@ -4,13 +4,13 @@ Universal rules for agents operating in this repository.
 
 ## Purpose
 
-This repository is an owned prompt-engineering operations workspace for agent-runtime. It now keeps renewal harnesses, checklists, and curated research context. Active OpenCode agents, skills, prompts, templates, and references live in `~/.config/opencode`. Outputs are cognitive configuration and operational documentation, not application code.
+This repository is an owned prompt-engineering operations workspace for agent-runtime. It now keeps renewal harnesses, checklists, and curated research context. It does not assume or contain any specific downstream runtime configuration repository. Outputs are cognitive configuration and operational documentation, not application code.
 
 ## Operating Model
 
 - **coordinating process orchestrates.** coordinating process selects priorities, starts daily loops, and coordinates agents.
 - **local runner engineers.** local runner performs local edits, file organization, harness work, verification, and evidence reporting.
-- **Repository artifacts guide specialist work.** Use the renewal harness, cleanup notes, and knowledge base here; use `~/.config/opencode` for active agents, skills, prompts, templates, references, and commands. Do not bulk-copy knowledge files into config; distill operational rules only.
+- **Repository artifacts guide specialist work.** Use the renewal harness, cleanup notes, and knowledge base here; downstream runtime consumers should apply only distilled operational rules. Do not bulk-copy knowledge files into downstream configuration.
 - **Artifacts are English.** Prompts, specs, skills, ledgers, reports, and docs are written in English.
 - **Conversation is Portuguese.** User-facing clarification and status are in Portuguese unless asked otherwise.
 
@@ -35,7 +35,7 @@ The `/daily-cron` command name is retained for compatibility, but its job is lon
 Recurring responsibility is split:
 
 - The **ai.md knowledge-curation cron** maintains curated research, `knowledge/INDEX.md`, and harness guidance in this repository.
-- The **config-opencode application cron** runs separately in `~/.config/opencode`, reads this repository's curated findings, and updates only distilled active OpenCode guidance.
+- **Downstream application automation** may run separately under operator control to read this repository's curated findings and update only distilled runtime guidance outside this repository.
 
 Harness gates:
 
@@ -61,7 +61,7 @@ local automation may commit and push routine validated repository maintenance di
 
 ## D.A.R.T.E. Workflow
 
-Use D.A.R.T.E. for new or materially changed prompts and skills. Active artifacts should be authored in `~/.config/opencode` unless the task explicitly targets this repo's harness or research:
+Use D.A.R.T.E. for new or materially changed prompts and skills. Runtime artifacts intended for downstream systems should be authored in the operator-designated downstream workspace unless the task explicitly targets this repo's harness or research:
 
 1. **Discovery** — Collect requirements and constraints.
 2. **Architecture** — Define identity, reasoning, tools, context, safety, and success criteria.
@@ -118,7 +118,7 @@ knowledge/                 # Shared research base
 ```
 
 Rules:
-- Preserve valuable knowledge and harness artifacts. Current OpenCode agents, skills, prompts, templates, and references live in `~/.config/opencode`, not this repository.
+- Preserve valuable knowledge and harness artifacts. Downstream runtime agents, skills, prompts, templates, and references are external consumers, not contents of this repository.
 - Keep local runner project configuration minimal, high-signal, and local-only. Work ledgers belong under `.opencode/works/<work-name>/`; do not create root `work-ledgers/`.
 - Legacy local prompt-copy directories are intentionally absent; do not reintroduce root `agents/`, `skills/`, `templates/`, `prompts/`, or `guides/` here.
 - Keep generated outputs small, high-signal, and reversible.
