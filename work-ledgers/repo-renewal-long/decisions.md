@@ -1,5 +1,17 @@
 # Decisions
 
+## 2026-06-30 — Keep active context reusable and separate from cleanup history
+
+Decision: refresh `work-ledgers/repo-renewal-long/context.md` so the active context describes the current recurring renewal contract, while cleanup-specific prior local-overlay and deletion details remain historical evidence in dated ledger entries.
+
+Rationale: the previous context file was an undated cleanup-run snapshot. Future renewal workers need current operating context first, without losing the evidence trail for user-authorized cleanup decisions.
+
+Evidence: `context.md` now names the default durable ledger, one-objective harness flow, canonical repository surfaces, `LICENSE` preservation, commit/push precedence, and a separate historical cleanup section.
+
+Rollback: restore the previous `context.md` from git history and remove `findings/2026-06-30-context-refresh.md` if the active context is intentionally narrowed back to cleanup-specific work.
+
+---
+
 ## 2026-06-30 — Normalize active memory candidate policy wording
 
 Decision: replace the active `memory-candidates.md` bullet that referenced `prior local-overlay policy file` with neutral repository policy wording.

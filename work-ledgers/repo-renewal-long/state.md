@@ -1,5 +1,13 @@
 # State
 
+## 2026-06-30 — context refresh
+
+Primary loop state: `learn`; supporting actions: `apply` and `evaluate`.
+
+Current renewal objective completed: refresh `work-ledgers/repo-renewal-long/context.md` from an undated cleanup-run snapshot into reusable active renewal context, while preserving prior local-overlay and deletion details as historical evidence in dated ledger entries.
+
+---
+
 ## 2026-06-30 — memory candidate normalization
 
 Primary loop state: `learn`; supporting actions: `apply` and `evaluate`.

@@ -1,5 +1,55 @@
 # Run Log
 
+## 2026-06-30 — Context refresh
+
+### Startup and inspection
+
+- Loaded `/var/home/core/.config/opencode/references/work-command.md` with the Python command requested by the user.
+- Read `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, `cron-harness/README.md`, `cron-harness/evaluation-checklist.md`, `WORKS.md`, and active `work-ledgers/repo-renewal-long/` handoff/state/plan/run-log/decision/memory/context files.
+- Ran `rtk git log --oneline -10`, `date`, and `rtk git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`; latest commit shown was `0ee5712 chore: normalize renewal memory candidate`, date returned `Tue Jun 30 10:01:48 AM UTC 2026`, and initial status was `## main...origin/main`.
+- Inspected `work-ledgers/repo-renewal-long/` and remaining local-overlay/legacy references before editing.
+
+### Objective
+
+- Primary loop state: `learn`; supporting actions: `apply` and `evaluate`.
+- Narrow objective: refresh the active `context.md` so future renewal workers inherit current reusable renewal context rather than an undated cleanup-run startup snapshot.
+
+### Changes
+
+- Updated `work-ledgers/repo-renewal-long/context.md` to separate active renewal context from historical cleanup context.
+- Added `work-ledgers/repo-renewal-long/findings/2026-06-30-context-refresh.md` with evidence, acceptance criteria, and rollback.
+- Updated `state.md`, `plan.md`, `decisions.md`, `run-log.md`, and `handoff.md` for this run.
+- No files were deleted; `LICENSE` was not edited; OpenCode did not commit or push. The active cron instruction requires coordinating process commit/push after validation passes.
+
+### Validation
+
+- `rtk git diff --check` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output, proving no diff whitespace errors or conflict markers.
+- `rtk git diff -- LICENSE` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output, proving `LICENSE` has no diff.
+- `rtk git diff --name-status` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; output showed only modified tracked ledger files under `work-ledgers/repo-renewal-long/`.
+- `rtk git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; output showed branch `main...origin/main`, six modified ledger files, and one new finding under `work-ledgers/repo-renewal-long/`.
+- `rtk git diff --stat` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; output showed a small tracked-ledger diff, with the new finding shown separately in status because it is untracked until final staging.
+
+### Reviews
+
+- `review-qwen`: PASS. Non-blocking note to replace pending validation evidence; addressed in this ledger update.
+- `review-glm`: PASS. Non-blocking note that final validation and judges were still pending; addressed as this run proceeds.
+- `review-kimi`: PASS. Non-blocking wording note about historical context phrasing; fixed by clarifying that older cleanup snapshots should only be treated as current when they appear under historical cleanup context or dated historical ledger entries.
+
+### Judges
+
+- `judge-qwen`: ACCEPT. Confirmed the objective is meaningful, scope is limited to `work-ledgers/repo-renewal-long/`, validation passed, no deletions/commit/push occurred, and no required fixes remain.
+- `judge-glm`: ACCEPT WITH NOTES. Independently reran validation and confirmed the diff is scoped, reversible, `LICENSE`-safe, and history-preserving. Non-blocking notes about self-referential diff-stat drift and pending judge wording were addressed in this ledger update.
+- Final rerun after judge ledger update: `rtk git diff --check` exit 0 with no output; `rtk git diff -- LICENSE` exit 0 with no output; `rtk git diff --name-status` exit 0 showing only modified tracked ledger files; `rtk git status --short --branch --untracked-files=all` exit 0 showing branch `main...origin/main`, six modified ledger files, and one new finding under `work-ledgers/repo-renewal-long/`.
+
+### Coordinating process finalization
+
+- OpenCode web URL: `http://100.72.226.10:4096`.
+- Active worker check before final commit: `ps -eo pid,ppid,etime,cmd | grep -E '[o]pencode' || true` exit 0; only the OpenCode web server was present, with no competing renewal worker.
+- Final coordinating checks before commit/push: `git diff --check` exit 0; `git diff -- LICENSE` exit 0 with no output; `git status --short --untracked-files=all` exit 0 showing only the intended ledger files; `git diff --name-status` exit 0 showing only tracked ledger modifications.
+- Active cron instruction explicitly requires commit and push after validation passes, so coordinating process will commit/push this validated ledger-only update.
+
+---
+
 ## 2026-06-30 — Memory candidate normalization
 
 ### Startup and inspection

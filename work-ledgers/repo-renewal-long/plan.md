@@ -1,5 +1,15 @@
 # Plan
 
+## 2026-06-30 — Context refresh
+
+1. Complete mandatory startup reads and command evidence. Done.
+2. Inspect the active handoff, context, state, run log, decisions, memory candidates, harness, and stale local-overlay references. Done.
+3. Select one narrow objective: refresh `context.md` so it separates current renewal context from historical cleanup context. Done.
+4. Apply a small reversible ledger-only edit and add a dated finding with evidence, acceptance criteria, and rollback. Done.
+5. Validate diff safety, license preservation, repository status, reviews, and judges before final response. Done.
+
+---
+
 ## 2026-06-30 — Memory candidate normalization
 
 1. Complete mandatory startup reads and command evidence. Done.

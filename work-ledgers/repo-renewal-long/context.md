@@ -2,14 +2,15 @@
 
 Repository role: agent-runtime prompt-operations workspace for recurring agent setup, prompt, skill, command, harness, knowledge, and loop-engineering work.
 
-Startup evidence gathered in this cleanup continuation:
-- Loaded `/var/home/core/.config/local-runner/references/work-command.md` with the requested Python command.
-- Read `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, `cron-harness/README.md`, `prior local-overlay README`, `prior local-overlay config`, `prior local-overlay command source`, and active `repo-renewal-long` ledger files.
-- Ran `git log --oneline -10`, `date`, `git status --short`, and `git ls-files` inspections.
-- Inspected references to legacy local directories before deleting them.
+## Active Renewal Context
 
-Relevant observed facts:
-- The active user instruction explicitly authorized destructive cleanup of `.agents/`, `.claude/`, `.factory/`, and noisy `work-ledgers/` artifacts.
-- The retained local runner project overlay is minimal: policy, README, config, command, and this durable ledger.
+- Default durable renewal ledger: `work-ledgers/repo-renewal-long/`, unless an active user or command instruction explicitly names a different ledger path for the current run.
+- Recurring renewal starts from `cron-harness/README.md`, then selects exactly one narrow objective with explicit evidence, acceptance criteria, safe auto-apply boundaries, and a markdown handoff.
+- Current canonical repository surfaces are root policy/docs, `cron-harness/`, `agents/`, `skills/`, `knowledge/`, `templates/`, `guides/`, and durable `work-ledgers/` records.
+- Historical cleanup evidence is preserved in older run-log, decisions, findings, and handoff entries. Do not treat older cleanup-specific startup snapshots as current operational context unless they appear under historical cleanup context or a dated historical ledger entry.
 - Root `LICENSE` is preserved and must remain untouched.
-- local runner must not commit or push in this run; coordinating process will do final commit/push after validation.
+- Commit/push behavior is governed by active instruction precedence: routine validated maintenance may commit/push only when the active instruction allows it after checklist validation and durable ledger evidence.
+
+## Historical Cleanup Context
+
+The 2026-06-30 cleanup sequence removed legacy local prompt-copy/deployment directories and local runner setup noise under explicit user authorization. Older ledger entries may still mention prior local-overlay placeholders, removed directories, or run-specific no-commit boundaries as historical evidence. Keep that history in the dated ledger records rather than reviving it as active scope.
