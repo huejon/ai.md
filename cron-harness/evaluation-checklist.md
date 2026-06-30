@@ -4,7 +4,8 @@ Use before reporting completion for long-horizon repository renewal work.
 
 ## Repository Safety
 
-- [ ] No push, commit, deploy, publish, external message, or production mutation occurred.
+- [ ] Commit/push matched the active instruction: none occurred if forbidden; if explicitly requested, it occurred only after validation and ledger evidence.
+- [ ] No deploy, publish, external message, production mutation, or other unrequested external side effect occurred.
 - [ ] No secrets were written to docs, prompts, logs, or reports.
 - [ ] `LICENSE` was not edited or removed.
 - [ ] Destructive cleanup was avoided unless explicitly authorized by the active task and recorded with evidence.

@@ -1,5 +1,26 @@
 # Handoff — repo-renewal-long
 
+## Current State — 2026-06-30 no-commit guard hardening
+
+This run selected loop state `apply` and completed the narrow objective to harden durable harness commit/push precedence. The harness now states that the active user/command instruction controls commit/push behavior for the current run: no commit/push if forbidden, and commit/push only after validation plus ledger evidence when explicitly requested.
+
+Changed files in this run are limited to `cron-harness/README.md`, `cron-harness/evaluation-checklist.md`, `work-ledgers/repo-renewal-long/*` ledger updates, and `WORKS.md` board status until the final commit/push step explicitly requested by the active instruction: `commit/push if validation passes`.
+
+## Validation Evidence — 2026-06-30 no-commit guard hardening
+
+- `git diff --check && git diff --cached --check` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output.
+- `git diff -- LICENSE && git diff --cached -- LICENSE` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output.
+- `git diff -- cron-harness/README.md cron-harness/evaluation-checklist.md work-ledgers/repo-renewal-long WORKS.md` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed only intended harness/checklist/ledger/board edits.
+- `git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed only intended modified files.
+- Reviews: `review-qwen` PASS; `review-glm` PASS conditional on evidence; `review-kimi` FAIL only for pending evidence/commit authorization citation, fixed by this ledger update.
+- Judges: `judge-qwen` ACCEPT; `judge-glm` ACCEPT WITH NOTES. Both accepted readiness to commit/push after validation.
+
+## Next Action — 2026-06-30
+
+After this ledger update is committed and pushed, the next renewal run should choose a fresh narrow objective from `cron-harness/README.md`; no follow-up is required for the no-commit guard unless future runs find a contradiction.
+
+---
+
 ## Current State — 2026-06-30 active-worker coordination
 
 This scheduled run selected loop state `evaluate` because an already-running local runner worker was active at startup and was touching this repository's ledger/work-board surface. coordinating process did not start a competing ai.md renewal worker. It waited for the existing run to finish, then validated the resulting repository state.

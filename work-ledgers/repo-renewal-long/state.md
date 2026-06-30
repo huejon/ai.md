@@ -2,6 +2,12 @@
 
 ## 2026-06-30
 
+Loop state: `apply` -> `evaluate`.
+
+Current renewal objective completed: harden the durable harness no-commit guard so active user/command instructions that forbid commit or push override the repository's routine direct-commit policy. The guard also permits commit/push only when explicitly requested after validation and ledger evidence, which matches this run's active instruction.
+
+---
+
 Loop state: `evaluate` -> `report`.
 
 Current renewal objective completed: active ledger path precedence is now explicit in `cron-harness/README.md`. The default durable ledger is `work-ledgers/repo-renewal-long/`; an invoking command or user may name a different active ledger path for a specific run.

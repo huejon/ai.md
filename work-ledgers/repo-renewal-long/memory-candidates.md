@@ -1,5 +1,6 @@
 # Memory Candidates
 
+- For renewal runs, the active user/command instruction has commit/push precedence over the repository's routine direct-commit policy: if it forbids commit/push, do not commit/push; if it explicitly requests commit/push after validation, do so only after checklist validation and ledger evidence.
 - For `repo-renewal-long`, `work-ledgers/repo-renewal-long/` is the default durable repository ledger. An explicit user/command path controls a specific run, but if that path is ignored/local-only, mirror durable evidence back into `work-ledgers/repo-renewal-long/` before reporting.
 - This repository's local runner-specific policy is expected to live at `prior local-overlay policy file` and states there is no human review gate for routine maintenance; local automation may commit and push directly to `main` after validation unless active task instructions forbid it.
 - Root `CLAUDE.md` was intentionally removed on 2026-06-30 as part of deeper cleanup; do not recreate it unless explicitly requested.

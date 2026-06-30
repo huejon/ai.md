@@ -1,5 +1,38 @@
 # Run Log
 
+## 2026-06-30 — No-commit guard hardening
+
+### Startup and inspection
+
+- Loaded `/var/home/core/.config/opencode/references/work-command.md` with the Python command requested by the user.
+- Read `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, `cron-harness/README.md`, `cron-harness/evaluation-checklist.md`, `WORKS.md`, and the active `work-ledgers/repo-renewal-long/` handoff/state/plan/decision/memory files.
+- Ran `git log --oneline -10` and `date` in `/var/home/core/workspace/jonloureiro/ai.md`.
+- Inspected `cron-harness/`, `work-ledgers/repo-renewal-long/`, `.opencode/works/`, and commit/push guard references before editing.
+
+### Objective
+
+- Loop state: `apply`.
+- Narrow objective: harden the durable harness no-commit guard so active user/command no-commit instructions override the repository's routine direct-commit policy, while preserving explicit post-validation commit/push when the active instruction requests it.
+
+### Changes
+
+- Updated `cron-harness/README.md` with a commit/push precedence guard.
+- Updated `cron-harness/evaluation-checklist.md` so validation checks commit/push behavior against the active instruction.
+- Updated `work-ledgers/repo-renewal-long/` state, plan, decision, memory candidate, run log, and handoff for this run.
+
+### Validation
+
+- `git diff --check && git diff --cached --check` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output. Proves the unstaged and cached diffs have no whitespace errors or conflict markers.
+- `git diff -- LICENSE && git diff --cached -- LICENSE` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output. Proves `LICENSE` has no unstaged or cached diff.
+- `git diff -- cron-harness/README.md cron-harness/evaluation-checklist.md work-ledgers/repo-renewal-long WORKS.md` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed only the intended harness/checklist/ledger/board edits, initially 9 files with 80 insertions and 2 deletions before the follow-up PR-clarity bullet.
+- `git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed the branch on `main...origin/main` with only the intended modified harness/checklist/ledger/board files.
+- Review panel: `review-qwen` PASS; `review-glm` PASS conditional on replacing pending validation evidence; `review-kimi` FAIL only because validation evidence was still pending and the active commit/push request was not cited. This section and the handoff were updated to satisfy those findings.
+- Active instruction evidence: the user request for this run includes `commit/push if validation passes`, so post-validation commit/push is explicitly authorized for this run.
+- Judges: `judge-qwen` ACCEPT; `judge-glm` ACCEPT WITH NOTES. Both independently confirmed diff scope, no `LICENSE` diff, `git diff --check` success, and readiness to commit/push under the active instruction.
+- Remaining unknown before final git step: remote push acceptance. If push succeeds, no known task blocker remains.
+
+---
+
 ## 2026-06-30 — Active-worker coordination and validation
 
 ### Startup and inspection

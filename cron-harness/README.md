@@ -45,6 +45,12 @@ Not allowed without explicit approval or an active task that explicitly grants c
 - broad rewrites that make rollback hard;
 - editing `LICENSE` or removing license notices.
 
+Commit/push precedence guard:
+- The active user or command instruction for the current run overrides the repository's routine direct-commit policy.
+- If the active instruction forbids commit or push, do not commit or push even when repository policy would normally allow it.
+- If the active instruction explicitly requests commit/push after validation, perform it only after the evaluation checklist passes and the durable ledger records the validation evidence.
+- Opening PRs remains disallowed unless the active instruction explicitly requests it.
+
 When unsure, do not delete or rewrite. Add the candidate to `cleanup-plan.md` or the active work ledger's `proposals/` directory with evidence and a recommended owner decision.
 
 ## Artifact Locations

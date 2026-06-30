@@ -1,5 +1,16 @@
 # Plan
 
+## 2026-06-30 — No-commit guard hardening
+
+1. Complete mandatory startup reads and command evidence. Done.
+2. Inspect the active handoff, harness safety rules, evaluation checklist, and ledger records for commit/push conflicts. Done.
+3. Select one narrow objective: harden durable harness guidance for active no-commit instructions. Done.
+4. Apply small reversible harness/checklist wording edits only. Done.
+5. Update `work-ledgers/repo-renewal-long/` with state, decision, run log, memory candidate, and handoff. Done.
+6. Validate diffs, license guard, and working tree; then run review/judge checks before commit/push. Done.
+
+---
+
 ## 2026-06-30 — Ledger route clarification
 
 1. Complete mandatory startup reads and command evidence. Done.

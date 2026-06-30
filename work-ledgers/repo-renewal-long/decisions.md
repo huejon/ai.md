@@ -1,5 +1,17 @@
 # Decisions
 
+## 2026-06-30 — Active no-commit instructions override routine direct-commit policy
+
+Decision: harden the durable harness so the active user or command instruction for a run controls commit/push behavior. If that instruction forbids commit or push, the worker must not commit or push even when repository policy normally allows routine direct commits. If the instruction explicitly requests commit/push after validation, commit/push may happen only after checklist validation and durable ledger evidence.
+
+Rationale: the previous ledger recorded a worker-side commit/push that conflicted with an active no-commit boundary. The repository still supports direct commit/push for validated routine maintenance, but the narrower active instruction must be treated as higher precedence for the current run.
+
+Evidence: `cron-harness/README.md` now contains a commit/push precedence guard, and `cron-harness/evaluation-checklist.md` now checks commit/push against the active instruction rather than treating every commit/push as either always allowed or always forbidden.
+
+Rollback: revert the two harness/checklist wording changes and this decision if repository governance changes to a single unconditional commit policy.
+
+---
+
 ## 2026-06-30 — Explicit active ledger path controls a run
 
 Decision: clarify the harness contract so `work-ledgers/repo-renewal-long/` remains the default durable ledger, but an explicit user or command ledger path controls the active run.
