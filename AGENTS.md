@@ -1,40 +1,72 @@
-# AGENTS.md — Prompt Engineering Workspace
+# AGENTS.md — Hermes/OpenCode Prompt Operations
 
 Universal rules for agents operating in this repository.
 
 ## Purpose
 
-This workspace builds and improves **LLM agent prompts** and **skills**. Output is cognitive configuration, not application code.
+This repository is an owned prompt-engineering operations workspace for Hermes/OpenCode. It improves prompts, harnesses, skills, commands, agent specs, and loop engineering. Outputs are cognitive configuration and operational documentation, not application code.
 
-## Language & Tone
+## Operating Model
 
-- Artifacts (`.md`, prompts, specs): **English**.
-- Conversation and clarification: **Portuguese**.
-- Keep communication concise, direct, and high-signal.
+- **Hermes orchestrates.** Hermes selects priorities, starts daily loops, and coordinates agents.
+- **OpenCode engineers.** OpenCode performs local edits, file organization, harness work, verification, and evidence reporting.
+- **Repository agents specialize.** Use planner/builder/reviewer agents and skills for non-trivial prompt or skill work.
+- **Artifacts are English.** Prompts, specs, skills, ledgers, reports, and docs are written in English.
+- **Conversation is Portuguese.** User-facing clarification and status are in Portuguese unless asked otherwise.
 
-## Mandatory Startup Protocol (Every Task)
+## Mandatory Startup Protocol
 
-1. Read relevant files with `Glob`/`Read`/`Grep`.
-2. Run `git log --oneline -10`.
-3. Run `date`.
-4. Read `knowledge/INDEX.md` before researching.
+Every task starts by:
+
+1. Reading relevant files with `Glob`/`Read`/`Grep`.
+2. Reading `AGENTS.md`, `README.md`, and `knowledge/INDEX.md` when repository policy or daily work may be affected.
+3. Running `git log --oneline -10`.
+4. Running `date`.
+5. Inspecting the relevant tree before editing.
 
 Do not skip this, even for simple tasks.
 
-## Autonomy & Questions
+## Long-Horizon Renewal Harness
 
-Act directly when the task is clear and reversible.
+Recurring automated improvement work must start at `cron-harness/README.md` or the OpenCode command `/daily-cron`.
 
-Ask only when:
-- action is destructive/irreversible (delete/push), or
-- intent is genuinely ambiguous, or
-- delegation target is unclear.
+The `/daily-cron` command name is retained for compatibility, but its job is long-horizon repository renewal. It should normally continue `.opencode/works/repo-renewal-long/` and use the `work` agent flow.
 
-When asking, use **`AskUser`** (never inline questions). Group related questions in one interaction.
+Harness gates:
 
-## Delegation Policy (Orchestrator)
+1. Establish scope and loop state.
+2. Read current policy, knowledge index, and relevant artifacts.
+3. Prefer safe, small, reversible edits.
+4. Apply only changes allowed by the safe auto-apply policy.
+5. Run the evaluation checklist before claiming completion.
+6. Update the durable work ledger, especially run log, decisions, findings, memory candidates, and handoff.
+7. Put uncertain cleanup in `cron-harness/cleanup-plan.md` or the active ledger; delete only when explicitly authorized and evidence-backed.
 
-`prompt-architect` is an orchestrator. Non-trivial work must be delegated.
+## Autonomy and Boundaries
+
+Act directly when work is clear, local, and reversible.
+
+Stop or ask only when:
+- action is destructive or irreversible,
+- intent is genuinely ambiguous after inspection,
+- a production, billing, deploy, publish, push, or external-message side effect is requested,
+- credentials or secrets would be exposed.
+
+OpenCode/Hermes may commit and push routine validated repository maintenance directly to `main` as governed by `.opencode/AGENTS.md`; active task instructions may still forbid commit/push for a run. Never deploy, publish, mutate production, send external messages, perform billing changes, or delete `LICENSE` without explicit user approval.
+
+## D.A.R.T.E. Workflow
+
+Use D.A.R.T.E. for new or materially changed prompts and skills:
+
+1. **Discovery** — Collect requirements and constraints.
+2. **Architecture** — Define identity, reasoning, tools, context, safety, and success criteria.
+3. **Redaction** — Write the prompt or `SKILL.md`.
+4. **Test** — Cover happy path, edge, adversarial, and failure-mode scenarios.
+5. **Enhance** — Score, simplify, and improve before approval.
+
+## Delegation Policy
+
+Non-trivial work should be delegated when the agent surface supports it.
 
 | Task | Delegate To |
 |---|---|
@@ -43,39 +75,17 @@ When asking, use **`AskUser`** (never inline questions). Group related questions
 | Full review/test/evaluation | `prompt-architect-reviewer` |
 | Complex redesign | `prompt-architect-planner` |
 
-Direct execution by orchestrator is limited to quick edits, workspace maintenance, structure questions, and knowledge lookups.
-
-## Team Mode
-
-In swarming/team mode, ULTRATHINK is automatic. Analyze dependencies and trade-offs deeply before delegating or asking users.
-
-## Agents
-
-| Agent | Role |
-|---|---|
-| `prompt-architect` | Orchestrator and workspace maintenance |
-| `prompt-architect-planner` | D.A.R.T.E. Phases 1-2 (Discovery/Architecture) |
-| `prompt-architect-builder` | D.A.R.T.E. Phase 3 (Redaction) |
-| `prompt-architect-reviewer` | D.A.R.T.E. Phases 4-5 (Test/Enhance) |
-
-Default entry point: `prompt-architect`.
-
-## D.A.R.T.E. Workflow (Required)
-
-1. **Discovery** — Collect complete requirements.
-2. **Architecture** — Define identity, reasoning, tools, context, safety.
-3. **Redaction** — Write system prompt or `SKILL.md`.
-4. **Test** — Validate with 4 scenarios: happy path, edge, adversarial, failure mode.
-5. **Enhance** — Score and improve before final delivery.
+The orchestrator may do quick edits, workspace maintenance, structure questions, and knowledge lookups directly.
 
 ## Quality Bar
 
-Every production prompt/skill must include:
-- clear scope and success criteria
-- explicit output format
-- uncertainty handling
-- safety/injection guardrails
-- test coverage and evaluation
+Every production prompt, skill, command, or harness must include:
+- clear scope and success criteria,
+- explicit output/report format,
+- uncertainty handling,
+- safety and injection guardrails,
+- evaluation or test coverage,
+- rollback or cleanup notes when relevant.
 
 ## Knowledge Base Rules
 
@@ -88,61 +98,42 @@ knowledge/
 ```
 
 Freshness:
-- **Current**: < 3 months
-- **Aging**: 3-6 months (verify key claims)
-- **Stale**: > 6 months (re-research)
+- **Current**: < 3 months.
+- **Aging**: 3-6 months; verify key claims.
+- **Stale**: > 6 months; re-research before relying on findings.
 
-Responsibilities:
-- Planner: primary producer
-- Reviewer: secondary producer
-- Builder: consumer
+Read `knowledge/INDEX.md` before research. If research is created or updated, update the index.
 
-If research is created/updated, update `knowledge/INDEX.md`.
-
-## Workspace Structure & DRY
+## Workspace Structure
 
 ```text
-.agents/skills/              # Canonical skills (internal + external)
-.claude/agents/              # Claude deployment prompts
-.opencode/agents/            # OpenCode deployment prompts
-agents/                      # Agent artifacts
-skills/                      # Skill artifacts (legacy/deployment support)
-knowledge/                   # Shared research base
+cron-harness/              # Long-horizon renewal loop contract and checklists
+.agents/skills/            # Canonical workspace skills
+.claude/agents/            # Claude deployment prompts
+.opencode/agents/          # OpenCode deployment prompts
+.opencode/command/         # OpenCode command entrypoints
+agents/                    # Agent artifacts
+skills/                    # Skill artifacts
+knowledge/                 # Shared research base
+templates/                 # Planning and delivery templates
+guides/                    # Supporting guides
 ```
 
 Rules:
-- `.claude/agents/` and `.opencode/agents/` must have identical bodies (frontmatter may differ).
-- `.claude/skills/` points to `.agents/skills/`.
-- OpenCode uses direct skill deployment (no symlink assumption).
-
-## Skills
-
-### Internal (workspace-owned)
-
-- `/agent-creator`
-- `/skill-creator-darte`
-- `/skillsmp-search`
-- `/post-task-review`
-
-### External (not reviewed here)
-
-- `/skill-creator`
-
-## Output Artifact Scope
-
-`agents/` and `skills/` store deliverables. They are outputs, not workspace policy files.
-
-After generating an artifact, do not modify unrelated workspace docs unless maintenance is explicitly required. `prompt-architect` is allowed to perform workspace maintenance updates.
+- Preserve valuable canonical skills, agents, templates, and knowledge.
+- Keep `.claude/agents/` and `.opencode/agents/` bodies aligned when editing shared agents; frontmatter may differ.
+- OpenCode uses direct skill deployment; do not assume symlink behavior.
+- Keep generated outputs small, high-signal, and reversible.
 
 ## Inviolable Rules
 
-1. Follow D.A.R.T.E. for new prompt/skill creation.
-2. Never skip safety guardrails.
-3. Always provide tests/evaluation before approval.
-4. Never ask user questions inline; use `AskUser`.
-5. Never push/delete without explicit user approval.
-6. Keep artifacts in English.
-7. Keep instructions concise; remove redundancy.
-8. Maintain `.claude/.opencode` DRY body parity.
-9. Use `/skill-creator-darte` for new skills; use `/skillsmp-search` first.
-10. Never review external skills as workspace deliverables.
+1. Hermes orchestrates; OpenCode and repo agents perform engineering.
+2. Follow D.A.R.T.E. for new or materially changed prompts and skills.
+3. Use cron harness gates for recurring repository renewal work.
+4. Never skip safety guardrails or evaluation evidence.
+5. OpenCode/Hermes may commit and push routine validated repository maintenance directly to `main` under `.opencode/AGENTS.md`; never delete without explicit approval and never delete `LICENSE`.
+6. Never delete `LICENSE`.
+7. Keep artifacts in English and user conversation in Portuguese.
+8. Prefer documented cleanup plans over risky deletion.
+9. Maintain `.claude/.opencode` agent body parity when changing deployable agents.
+10. Do not store secrets in prompts, logs, reports, or memory.
