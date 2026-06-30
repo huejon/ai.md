@@ -10,7 +10,7 @@ This repository is an owned prompt-engineering operations workspace for Hermes/O
 
 - **Hermes orchestrates.** Hermes selects priorities, starts daily loops, and coordinates agents.
 - **OpenCode engineers.** OpenCode performs local edits, file organization, harness work, verification, and evidence reporting.
-- **Repository agents specialize.** Use planner/builder/reviewer agents and skills for non-trivial prompt or skill work.
+- **Repository artifacts guide specialist work.** Use durable specs, prompts, skills, templates, and knowledge for non-trivial prompt or skill work; do not rely on deleted local deployable prompt copies.
 - **Artifacts are English.** Prompts, specs, skills, ledgers, reports, and docs are written in English.
 - **Conversation is Portuguese.** User-facing clarification and status are in Portuguese unless asked otherwise.
 
@@ -108,10 +108,8 @@ Read `knowledge/INDEX.md` before research. If research is created or updated, up
 
 ```text
 cron-harness/              # Long-horizon renewal loop contract and checklists
-.agents/skills/            # Canonical workspace skills
-.claude/agents/            # Claude deployment prompts
-.opencode/agents/          # OpenCode deployment prompts
 .opencode/command/         # OpenCode command entrypoints
+.opencode/works/           # Durable OpenCode work ledgers and handoffs
 agents/                    # Agent artifacts
 skills/                    # Skill artifacts
 knowledge/                 # Shared research base
@@ -121,8 +119,8 @@ guides/                    # Supporting guides
 
 Rules:
 - Preserve valuable canonical skills, agents, templates, and knowledge.
-- Keep `.claude/agents/` and `.opencode/agents/` bodies aligned when editing shared agents; frontmatter may differ.
-- OpenCode uses direct skill deployment; do not assume symlink behavior.
+- Keep OpenCode project configuration minimal and high-signal; project-specific OpenCode files live under `.opencode/` only when they are needed for recurring repository operation.
+- Legacy local deployable prompt-copy directories are intentionally absent; canonical development artifacts live under `agents/`, `skills/`, `knowledge/`, `templates/`, `guides/`, and the harness.
 - Keep generated outputs small, high-signal, and reversible.
 
 ## Inviolable Rules
@@ -135,5 +133,5 @@ Rules:
 6. Never delete `LICENSE`.
 7. Keep artifacts in English and user conversation in Portuguese.
 8. Prefer documented cleanup plans over risky deletion.
-9. Maintain `.claude/.opencode` agent body parity when changing deployable agents.
+9. Do not reintroduce legacy local deployable prompt-copy directories unless a future task explicitly re-establishes them with evidence.
 10. Do not store secrets in prompts, logs, reports, or memory.

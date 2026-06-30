@@ -4,6 +4,8 @@
 
 Loop state: `apply` -> `evaluate`.
 
-The current run implements an explicit deeper cleanup request. Root `CLAUDE.md` was removed, `.opencode/AGENTS.md` was added for OpenCode-specific repository policy, root `AGENTS.md` and `README.md` were reconciled with that policy, and the durable ledger was created for future renewal continuity.
+The current run implements an explicit cleanup request. Legacy local prompt-copy/deployment directories and noisy OpenCode dependency/package artifacts have been removed locally. Root docs, OpenCode overlay docs, harness cleanup notes, and this ledger are being updated to reflect the retained canonical layout.
 
-Existing worktree changes were present before this run (`AGENTS.md`, `README.md`, deleted `j-qa.md`/`j-rev.md`, untracked `.opencode/**`, and `cron-harness/**`). This run intentionally changed `CLAUDE.md`, `.opencode/AGENTS.md`, `.opencode/works/repo-renewal-long/**`, and minimal policy lines in `AGENTS.md`/`README.md` to avoid contradictory push/review-gate instructions.
+Existing worktree changes were present before this run, including prior renewal edits and deleted root `j-qa.md`/`j-rev.md`. This run intentionally changes the requested cleanup paths plus documentation/ledger references needed to keep the repository coherent.
+
+Boundary: OpenCode will not commit or push in this run; Hermes will perform final commit/push after validation.

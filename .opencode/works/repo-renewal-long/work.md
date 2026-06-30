@@ -2,16 +2,17 @@
 
 ## Objective
 
-Maintain a durable, evidence-backed renewal loop that keeps this Hermes/OpenCode operations repository minimal, high-signal, and aligned with current OpenCode operating policy.
+Continue the durable Hermes/OpenCode repository renewal loop and keep this operations repository minimal, high-signal, and aligned with current OpenCode operating policy.
 
 ## Current Task Scope
 
-- Remove root `CLAUDE.md` entirely as explicitly requested.
-- Add `.opencode/AGENTS.md` with concise OpenCode-specific policy: no human review gate; OpenCode/Hermes may commit and push directly to `main` after validation.
-- Preserve `LICENSE`.
-- Avoid secrets.
+- Remove `.agents/`, `.claude/`, and `.factory/` entirely as explicitly requested.
+- Clean `.opencode/` so it retains only high-signal project files needed for future long-horizon work: `AGENTS.md`, `README.md`, `opencode.jsonc`, `command/daily-cron.md`, and the current useful `works/repo-renewal-long/` ledger/handoff.
+- Remove `.opencode/agents/`, `.opencode/node_modules/`, package files, obsolete `.opencode/.gitignore`, and stale/noisy prior ledger artifacts.
+- Update root docs, OpenCode overlay docs, harness cleanup notes, and this ledger so active references no longer point to deleted local prompt-copy directories.
+- Preserve `LICENSE` and avoid secrets.
 - Validate with `git diff --check`, `git diff -- LICENSE`, and `git status`.
-- Do not commit or push inside OpenCode; Hermes will perform final commit/push after verification.
+- Do not commit or push inside OpenCode; Hermes will perform final commit/push after validation.
 
 ## Out of Scope
 

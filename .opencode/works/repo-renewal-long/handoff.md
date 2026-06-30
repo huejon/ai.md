@@ -2,27 +2,27 @@
 
 ## Current State
 
-Requested cleanup has been applied locally:
+User-authorized legacy cleanup is applied locally:
 
-- Root `CLAUDE.md` removed.
-- `.opencode/AGENTS.md` added with OpenCode-specific policy: no human review gate, OpenCode/Hermes may commit and push directly to `main` after validation.
-- Root `AGENTS.md` and `README.md` policy lines reconciled so they do not contradict the OpenCode-specific policy.
-- Durable ledger created/updated under `.opencode/works/repo-renewal-long/`.
+- Removed `.agents/`, `.claude/`, `.factory/`, and `.opencode/agents/`.
+- Removed `.opencode/node_modules/`, `.opencode/package.json`, `.opencode/package-lock.json`, and obsolete `.opencode/.gitignore`.
+- Kept `.opencode/AGENTS.md`, `.opencode/README.md`, `.opencode/opencode.jsonc`, `.opencode/command/daily-cron.md`, and this useful `repo-renewal-long` ledger.
+- Updated root/harness/OpenCode docs and ledger to stop presenting deleted local prompt-copy directories as active repository structure.
 - `LICENSE` preserved.
 - No secrets added.
+- OpenCode did not commit or push; Hermes will perform final commit/push.
 
 ## Validation Evidence
 
 Executed in `/var/home/core/workspace/jonloureiro/ai.md`:
 
-- `git diff --check` — exit 0; no output. Proves no whitespace errors or conflict markers in the diff.
+- `.opencode` directory inventory via Python — exit 0; only `command`, `works`, `works/repo-renewal-long`, `findings`, and `reviews` directories remain under `.opencode/`.
+- `git diff --check` — exit 0; no output. Proves no diff whitespace errors or conflict markers.
 - `git diff -- LICENSE` — exit 0; no output. Proves `LICENSE` was preserved without modifications.
-- `git status` — exit 0; showed `D CLAUDE.md`, `?? .opencode/AGENTS.md`, `?? .opencode/works/`, plus pre-existing unrelated changes. Proves the worktree remains uncommitted/unpushed for Hermes final handling.
-
-## Existing Worktree Context
-
-Before this run, `git status --short` already showed modified `AGENTS.md`, `README.md`, deleted `j-qa.md`/`j-rev.md`, and untracked `.opencode/**` plus `cron-harness/**`. This run intentionally changed the requested cleanup/policy files, this ledger, and minimal root policy wording needed to resolve the direct-push/no-human-review-gate conflict.
+- `git status --short` — exit 0; shows expected uncommitted deletions/modifications and two new ledger files. Proves OpenCode did not commit/push and leaves final staging/commit/push to Hermes.
+- Review panel: `review-qwen` PASS, `review-glm` PASS, `review-kimi` initial FAIL for empty local directories; fixed by removing empty directories.
+- Judges: `judge-qwen` ACCEPT and `judge-glm` ACCEPT.
 
 ## Next Action
 
-Hermes should perform final commit/push outside OpenCode as requested, staging only intended files after reviewing the dirty worktree. Review/judge consensus is recorded in `reviews/2026-06-30-review-summary.md`.
+Hermes should stage only intended files, then perform final commit/push outside OpenCode as requested.

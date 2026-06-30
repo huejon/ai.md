@@ -4,9 +4,9 @@ Purpose: record uncertain cleanup candidates for later review. During `repo-rene
 
 ## Current First-Pass Notes
 
-- `.opencode/node_modules/`, `.opencode/package.json`, and `.opencode/package-lock.json` appear to be local OpenCode plugin dependencies and are ignored by `.opencode/.gitignore`; leave untouched unless dependency management is explicitly in scope.
-- `j-qa.md` and `j-rev.md` duplicate deployed-looking agent material at the repository root. Initial renewal evidence found richer canonical/deployed versions under `.claude/agents/`, `.opencode/agents/`, and `agents/j-*`; removal is appropriate when recorded in `.opencode/works/repo-renewal-long/decisions.md`.
-- `skills/` and `.agents/skills/` both contain skill material. Preserve until canonical/deployment responsibilities are confirmed.
+- 2026-06-30: User explicitly authorized removing legacy local deployment/copy directories and OpenCode dependency noise. The active ledger records deletion of the old local prompt-copy directories and pruning of OpenCode package/dependency artifacts.
+- Root `j-qa.md` and `j-rev.md` were already marked for removal in earlier renewal work; keep richer canonical artifacts under `agents/j-qa/` and `agents/j-rev/`.
+- `skills/` contains potentially valuable operational context; preserve unless a future task explicitly authorizes more cleanup with evidence.
 - `guides/`, `templates/`, and `knowledge/` contain potentially valuable operational context; preserve.
 
 ## Candidate Format

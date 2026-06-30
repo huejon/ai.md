@@ -6,7 +6,7 @@ This directory is the repository OpenCode overlay. Track project-level OpenCode 
 
 Canonical overlay files in this repository:
 
-- `agents/` — deployable OpenCode agent prompts that mirror `.claude/agents/` bodies when shared.
+- `AGENTS.md` — OpenCode-specific repository policy.
 - `command/` — OpenCode command entrypoints, including `/daily-cron` for long-horizon renewal.
 - `opencode.jsonc` — safe project defaults such as disabled sharing.
 - `README.md` — this overlay contract.
@@ -16,9 +16,10 @@ Local or task-scoped artifacts:
 - `works/<work-name>/` — durable local work ledgers; track only when the ledger is part of the intended repository evidence for a change.
 - `memory/` — optional evidence-backed stable facts; omit empty placeholders.
 
-Suggested contents:
+Current retained ledger:
 
-- `works/<work-name>/` — task ledgers.
-- `skills/`, `command/`, `agents/`, `prompts/` — project-specific OpenCode additions.
+- `works/repo-renewal-long/` — current long-horizon renewal ledger and handoff.
+
+Do not store vendored dependencies, package manager files, legacy prompt-copy directories, secrets, or transient logs here.
 
 Do not store secrets here.
