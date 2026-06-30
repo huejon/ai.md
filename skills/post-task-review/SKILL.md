@@ -51,7 +51,7 @@ For changed files, check:
 - debug leftovers
 - naming and consistency
 - documentation alignment (`README`, `CLAUDE.md`, `AGENTS.md`)
-- `.claude` / `.opencode` DRY consistency when applicable
+- `.claude` / `<local-runtime-config>` DRY consistency when applicable
 
 ### 4) Decide WIP Prefix
 

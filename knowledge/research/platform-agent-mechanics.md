@@ -1,18 +1,18 @@
-# Platform Agent Mechanics — Claude Code & OpenCode
+# Platform Agent Mechanics — Claude Code & local runner
 
 > Last updated: 2026-02-15
 > Status: Current
 
 ## Summary
 
-How agents and subagents actually work in Claude Code and OpenCode. Critical for designing agents that are compatible with both platforms.
+How agents and subagents actually work in Claude Code and local runner. Critical for designing agents that are compatible with both platforms.
 
 ## Sources
 
 - [Create custom subagents — Claude Code Docs](https://code.claude.com/docs/en/sub-agents)
 - [Orchestrate teams of Claude Code sessions](https://code.claude.com/docs/en/agent-teams)
-- [Agents — OpenCode](https://opencode.ai/docs/agents/)
-- [Tools — OpenCode](https://opencode.ai/docs/tools/)
+- [Agents — local runner](vendor agent documentation checked during original research)
+- [Tools — local runner](vendor tool documentation checked during original research)
 
 ## Key Findings
 
@@ -44,9 +44,9 @@ How agents and subagents actually work in Claude Code and OpenCode. Critical for
 
 **Frontmatter fields**: `name`, `description`, `model` (opus/sonnet/haiku), `color`, `allowedTools`, `permissionMode`.
 
-### 3. OpenCode Specifics
+### 3. local runner Specifics
 
-**Agent definition**: `.opencode/agents/*.md` with YAML frontmatter + markdown body.
+**Agent definition**: `<local-runtime-config>/agents/*.md` with YAML frontmatter + markdown body.
 
 **Subagent invocation**: Three mechanisms:
 1. `call_omo_agent` — Synchronous, blocking, direct invocation
@@ -67,10 +67,10 @@ How agents and subagents actually work in Claude Code and OpenCode. Critical for
 
 ### 4. Cross-Platform Compatibility
 
-| Feature | Claude Code | OpenCode |
+| Feature | Claude Code | local runner |
 |---|---|---|
 | Agent file format | YAML frontmatter + MD | YAML frontmatter + MD |
-| Agent location | `.claude/agents/` | `.opencode/agents/` |
+| Agent location | `.claude/agents/` | `<local-runtime-config>/agents/` |
 | System prompt | Markdown body | Markdown body |
 | Model config | `model: opus` | `model: anthropic/claude-...` |
 | Tools config | `allowedTools` list | `tools` object (key: bool) |
@@ -94,4 +94,4 @@ This dual role requires no special configuration — the same agent file works f
 - Agent body (system prompt) is platform-agnostic — write once, configure frontmatter per platform.
 - The orchestrator pattern works on both platforms but with different invocation mechanics.
 - No nesting in Claude Code means the orchestrator must be the ONLY level that spawns subagents.
-- OpenCode's `mode` field can explicitly mark agents as "subagent" to hide from direct user selection.
+- local runner's `mode` field can explicitly mark agents as "subagent" to hide from direct user selection.

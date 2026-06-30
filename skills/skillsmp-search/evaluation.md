@@ -75,7 +75,7 @@ The skill meets all quality standards and is ready for deployment.
 1. **Clear purpose**: Skill's function is immediately obvious
 2. **Practical utility**: Solves a real discovery problem for users
 3. **Well-documented**: Examples, error handling, and pagination are covered
-4. **Cross-platform**: Works seamlessly on both Claude Code and OpenCode
+4. **Cross-platform**: Works seamlessly on both Claude Code and local runner
 5. **Error resilient**: Handles edge cases (Cloudflare, network errors) gracefully
 6. **Honest limitations**: Clearly communicates that search requires website visit
 

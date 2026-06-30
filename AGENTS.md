@@ -1,15 +1,15 @@
-# AGENTS.md — Hermes/OpenCode Prompt Operations
+# AGENTS.md — agent-runtime Prompt Operations
 
 Universal rules for agents operating in this repository.
 
 ## Purpose
 
-This repository is an owned prompt-engineering operations workspace for Hermes/OpenCode. It improves prompts, harnesses, skills, commands, agent specs, and loop engineering. Outputs are cognitive configuration and operational documentation, not application code.
+This repository is an owned prompt-engineering operations workspace for agent-runtime. It improves prompts, harnesses, skills, commands, agent specs, and loop engineering. Outputs are cognitive configuration and operational documentation, not application code.
 
 ## Operating Model
 
-- **Hermes orchestrates.** Hermes selects priorities, starts daily loops, and coordinates agents.
-- **OpenCode engineers.** OpenCode performs local edits, file organization, harness work, verification, and evidence reporting.
+- **coordinating process orchestrates.** coordinating process selects priorities, starts daily loops, and coordinates agents.
+- **local runner engineers.** local runner performs local edits, file organization, harness work, verification, and evidence reporting.
 - **Repository artifacts guide specialist work.** Use durable specs, prompts, skills, templates, and knowledge for non-trivial prompt or skill work; do not rely on deleted local deployable prompt copies.
 - **Artifacts are English.** Prompts, specs, skills, ledgers, reports, and docs are written in English.
 - **Conversation is Portuguese.** User-facing clarification and status are in Portuguese unless asked otherwise.
@@ -28,9 +28,9 @@ Do not skip this, even for simple tasks.
 
 ## Long-Horizon Renewal Harness
 
-Recurring automated improvement work must start at `cron-harness/README.md` or the OpenCode command `/daily-cron`.
+Recurring automated improvement work must start at `cron-harness/README.md` or the local runner command `/daily-cron`.
 
-The `/daily-cron` command name is retained for compatibility, but its job is long-horizon repository renewal. It should normally continue `.opencode/works/repo-renewal-long/` and use the `work` agent flow.
+The `/daily-cron` command name is retained for compatibility, but its job is long-horizon repository renewal. It should normally continue `work-ledgers/repo-renewal-long/` and use the `work` agent flow.
 
 Harness gates:
 
@@ -52,7 +52,7 @@ Stop or ask only when:
 - a production, billing, deploy, publish, push, or external-message side effect is requested,
 - credentials or secrets would be exposed.
 
-OpenCode/Hermes may commit and push routine validated repository maintenance directly to `main` as governed by `.opencode/AGENTS.md`; active task instructions may still forbid commit/push for a run. Never deploy, publish, mutate production, send external messages, perform billing changes, or delete `LICENSE` without explicit user approval.
+local automation may commit and push routine validated repository maintenance directly to `main` as governed by repository policy; active task instructions may still forbid commit/push for a run. Never deploy, publish, mutate production, send external messages, perform billing changes, or delete `LICENSE` without explicit user approval.
 
 ## D.A.R.T.E. Workflow
 
@@ -108,8 +108,7 @@ Read `knowledge/INDEX.md` before research. If research is created or updated, up
 
 ```text
 cron-harness/              # Long-horizon renewal loop contract and checklists
-.opencode/command/         # OpenCode command entrypoints
-.opencode/works/           # Durable OpenCode work ledgers and handoffs
+work-ledgers/              # Durable local runner work ledgers and handoffs
 agents/                    # Agent artifacts
 skills/                    # Skill artifacts
 knowledge/                 # Shared research base
@@ -119,17 +118,17 @@ guides/                    # Supporting guides
 
 Rules:
 - Preserve valuable canonical skills, agents, templates, and knowledge.
-- Keep OpenCode project configuration minimal and high-signal; project-specific OpenCode files live under `.opencode/` only when they are needed for recurring repository operation.
+- Keep local runner project configuration minimal, high-signal, and local-only unless a neutral tracked artifact is required.
 - Legacy local deployable prompt-copy directories are intentionally absent; canonical development artifacts live under `agents/`, `skills/`, `knowledge/`, `templates/`, `guides/`, and the harness.
 - Keep generated outputs small, high-signal, and reversible.
 
 ## Inviolable Rules
 
-1. Hermes orchestrates; OpenCode and repo agents perform engineering.
+1. coordinating process orchestrates; local runner and repo agents perform engineering.
 2. Follow D.A.R.T.E. for new or materially changed prompts and skills.
 3. Use cron harness gates for recurring repository renewal work.
 4. Never skip safety guardrails or evaluation evidence.
-5. OpenCode/Hermes may commit and push routine validated repository maintenance directly to `main` under `.opencode/AGENTS.md`; never delete without explicit approval and never delete `LICENSE`.
+5. local automation may commit and push routine validated repository maintenance directly to `main` under repository policy; never delete without explicit approval and never delete `LICENSE`.
 6. Never delete `LICENSE`.
 7. Keep artifacts in English and user conversation in Portuguese.
 8. Prefer documented cleanup plans over risky deletion.

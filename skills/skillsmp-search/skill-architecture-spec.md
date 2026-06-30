@@ -2,9 +2,9 @@
 
 ## Requirements Summary
 
-**Purpose**: Enable users to browse and discover agent skills from the SkillsMP marketplace (skillsmp.com) directly within Claude Code or OpenCode.
+**Purpose**: Enable users to browse and discover agent skills from the SkillsMP marketplace (skillsmp.com) directly within Claude Code or local runner.
 
-**Target Platforms**: Claude Code, OpenCode (cross-compatible)
+**Target Platforms**: Claude Code, local runner (cross-compatible)
 
 **Invocation Mode**: User-invocable with optional sort mode argument
 
@@ -76,13 +76,13 @@ description: Browse and discover agent skills from the SkillsMP marketplace (ski
 ## Cross-Platform Compatibility Plan
 
 **Platform Considerations**:
-- Both Claude Code and OpenCode support user-invocable skills
+- Both Claude Code and local runner support user-invocable skills
 - No Claude Code-only features are used
 - Execute tool (or equivalent shell tool) is available on both platforms
 
 **Deployment**:
 - Single SKILL.md file for both platforms
-- Copy to both `.claude/skills/` and `.opencode/skills/`
+- Copy to both `.claude/skills/` and `<local-runtime-config>/skills/`
 
 ---
 
@@ -132,7 +132,7 @@ description: Browse and discover agent skills from the SkillsMP marketplace (ski
 3. Results are formatted clearly with relevant metadata
 4. Pagination is indicated when results exceed one page
 5. API errors are handled gracefully
-6. Skill works on both Claude Code and OpenCode
+6. Skill works on both Claude Code and local runner
 7. Users are directed to website for search functionality
 
 ---

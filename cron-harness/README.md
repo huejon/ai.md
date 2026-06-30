@@ -1,6 +1,6 @@
 # Long-Horizon Repository Renewal Harness
 
-Purpose: continue a durable, evidence-backed renewal loop that keeps this Hermes/OpenCode operations repository minimal, high-signal, and useful for recurring long tasks.
+Purpose: continue a durable, evidence-backed renewal loop that keeps this agent-runtime operations repository minimal, high-signal, and useful for recurring long tasks.
 
 This harness replaces one-off daily cron churn. Each run must learn from current repository evidence, improve one meaningful part of the operating system, and leave a durable handoff for the next run.
 
@@ -11,7 +11,7 @@ Each run must:
 1. Read `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, and this file.
 2. Run `git log --oneline -10` and `date`.
 3. Inspect relevant tree areas before editing.
-4. Load or create the active durable work ledger, normally `.opencode/works/repo-renewal-long/`.
+4. Load or create the active durable work ledger, normally `work-ledgers/repo-renewal-long/`, unless the invoking command or user explicitly names a different active ledger path.
 5. Select exactly one primary loop state from the list below.
 6. Select one narrow renewal objective with explicit evidence and acceptance criteria.
 7. Make meaningful, reversible local changes covered by the safe auto-apply policy and the active user instruction.
@@ -34,7 +34,7 @@ Each run must:
 Allowed without extra approval:
 - add or refine docs, checklists, prompts, command files, skills, agent specs, and templates;
 - correct broken links, stale wording, and duplicate low-value wording;
-- add reports or work ledgers under `.opencode/works/`;
+- add reports or work ledgers under `work-ledgers/`;
 - update `knowledge/INDEX.md` when research files are changed;
 - remove old/noisy artifacts only when the active user task explicitly authorizes cleanup and the ledger records evidence, risk, and reversal path first.
 
@@ -45,16 +45,16 @@ Not allowed without explicit approval or an active task that explicitly grants c
 - broad rewrites that make rollback hard;
 - editing `LICENSE` or removing license notices.
 
-When unsure, do not delete or rewrite. Add the candidate to `cleanup-plan.md` or `.opencode/works/repo-renewal-long/proposals/` with evidence and a recommended owner decision.
+When unsure, do not delete or rewrite. Add the candidate to `cleanup-plan.md` or the active work ledger's `proposals/` directory with evidence and a recommended owner decision.
 
 ## Artifact Locations
 
-- Durable renewal ledger: `.opencode/works/repo-renewal-long/`.
-- Daily or task reports: `.opencode/works/<work-name>/handoff.md` plus dated findings when useful.
-- Run logs: `.opencode/works/<work-name>/run-log.md`.
-- Findings: `.opencode/works/<work-name>/findings/`.
-- Reviews: `.opencode/works/<work-name>/reviews/`.
-- Proposals: `.opencode/works/<work-name>/proposals/`.
+- Durable renewal ledger: `work-ledgers/repo-renewal-long/` by default, or the explicit active ledger path named by the user/command for the run.
+- Daily or task reports: `work-ledgers/<work-name>/handoff.md` plus dated findings when useful.
+- Run logs: `work-ledgers/<work-name>/run-log.md`.
+- Findings: `work-ledgers/<work-name>/findings/`.
+- Reviews: `work-ledgers/<work-name>/reviews/`.
+- Proposals: `work-ledgers/<work-name>/proposals/`.
 - Cleanup candidates: `cron-harness/cleanup-plan.md`.
 - Prompt and loop checklists: this directory.
 

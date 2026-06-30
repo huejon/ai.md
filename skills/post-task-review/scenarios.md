@@ -156,7 +156,7 @@ proper time units.
 
 **Setup:**
 - User modified an agent prompt in `.claude/agents/prompt-architect.md`
-- User did NOT update `.opencode/agents/prompt-architect.md` (same content required)
+- User did NOT update `<local-runtime-config>/agents/prompt-architect.md` (same content required)
 - CLAUDE.md exists and documents DRY rule
 
 **Expected behavior:**
@@ -172,7 +172,7 @@ Updated prompt-architect agent with improved decision protocol
 
 ## Issues Found
 - .claude/agents/prompt-architect.md was modified
-- .opencode/agents/prompt-architect.md NOT updated
+- <local-runtime-config>/agents/prompt-architect.md NOT updated
 - DRY rule violation: agent prompts must be identical in both locations
 
 ## Documentation Alignment
@@ -185,7 +185,7 @@ Updated prompt-architect agent with improved decision protocol
 (WIP) update: Improve decision protocol in prompt-architect
 
 Added clarification on when to use Decision Protocol.
-ISSUE: Must also update .opencode/agents/prompt-architect.md
+ISSUE: Must also update <local-runtime-config>/agents/prompt-architect.md
 to maintain identical content (DRY rule).
 ```
 

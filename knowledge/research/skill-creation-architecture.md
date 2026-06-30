@@ -6,16 +6,16 @@
 
 ## Summary
 
-This document contains deep research findings on the anatomy of skills for Claude Code and OpenCode, a gap analysis of the current PromptArchitect pipeline, and a detailed architecture plan for adding skill creation capability to the existing agents without modifying any existing files.
+This document contains deep research findings on the anatomy of skills for Claude Code and local runner, a gap analysis of the current PromptArchitect pipeline, and a detailed architecture plan for adding skill creation capability to the existing agents without modifying any existing files.
 
 ## Sources
 
 - [Extend Claude with skills — Claude Code Docs](https://code.claude.com/docs/en/skills)
 - [Agent Skills Open Standard — Specification](https://agentskills.io/specification)
 - [Agent Skills GitHub — anthropics/skills](https://github.com/anthropics/skills/blob/main/spec/agent-skills-spec.md)
-- [OpenCode Skills Documentation](https://opencode.ai/docs/skills)
-- [OpenCode Commands Documentation](https://opencode.ai/docs/commands/)
-- [OpenCode Agents Documentation](https://opencode.ai/docs/agents/)
+- [local runner Skills Documentation](vendor skill documentation checked during original research)
+- [local runner Commands Documentation](vendor command documentation checked during original research)
+- [local runner Agents Documentation](vendor agent documentation checked during original research)
 - [Claude Code Customization Guide](https://alexop.dev/posts/claude-code-customization-guide-claudemd-skills-subagents/)
 - [Claude Code Merges Slash Commands Into Skills](https://medium.com/@joe.njenga/claude-code-merges-slash-commands-into-skills-dont-miss-your-update-8296f3989697)
 
@@ -25,7 +25,7 @@ This document contains deep research findings on the anatomy of skills for Claud
 
 ### 1.1 Agent Skills Open Standard (agentskills.io)
 
-Both Claude Code and OpenCode implement the **Agent Skills** open standard. This is the baseline format.
+Both Claude Code and local runner implement the **Agent Skills** open standard. This is the baseline format.
 
 **Directory structure:**
 ```
@@ -113,33 +113,33 @@ Higher-priority locations win when names conflict. Plugin skills use `plugin-nam
 
 **Backward compatibility:** `.claude/commands/` files still work with the same frontmatter support. Skills take precedence when names conflict.
 
-### 1.3 OpenCode Skills — Platform Extensions
+### 1.3 local runner Skills — Platform Extensions
 
-OpenCode also implements the Agent Skills standard with its own extensions.
+local runner also implements the Agent Skills standard with its own extensions.
 
 **Storage locations (searched by walking up from cwd to git worktree root):**
 
 | Path | Scope |
 |---|---|
-| `.opencode/skills/<name>/SKILL.md` | Project-local |
-| `~/.config/opencode/skills/<name>/SKILL.md` | Global |
+| `<local-runtime-config>/skills/<name>/SKILL.md` | Project-local |
+| `~/.config/<local-runtime>/skills/<name>/SKILL.md` | Global |
 | `.claude/skills/<name>/SKILL.md` | Cross-compatible (project) |
 | `~/.claude/skills/<name>/SKILL.md` | Cross-compatible (global) |
 | `.agents/skills/<name>/SKILL.md` | Generic (project) |
 | `~/.agents/skills/<name>/SKILL.md` | Generic (global) |
 
-**OpenCode frontmatter fields (standard only):**
+**local runner frontmatter fields (standard only):**
 - `name` (required)
 - `description` (required)
 - `license` (optional)
 - `compatibility` (optional)
 - `metadata` (optional)
 
-OpenCode does NOT extend the frontmatter with `disable-model-invocation`, `context`, `agent`, `hooks`, `argument-hint`, `user-invocable`, or `model` fields.
+local runner does NOT extend the frontmatter with `disable-model-invocation`, `context`, `agent`, `hooks`, `argument-hint`, `user-invocable`, or `model` fields.
 
 **Invocation mechanism:** Agents access skills through the native `skill` tool by calling `skill({ name: "skill-name" })`. Available skills appear in the tool description with name and description pairs.
 
-**Permission control (in `opencode.json`):**
+**Permission control (in `local-runner-config.json`):**
 ```json
 {
   "permission": {
@@ -160,13 +160,13 @@ permission:
     "documents-*": "allow"
 ```
 
-### 1.4 OpenCode Custom Commands
+### 1.4 local runner Custom Commands
 
-OpenCode has a separate "commands" concept distinct from skills.
+local runner has a separate "commands" concept distinct from skills.
 
 **Storage locations:**
-- Global: `~/.config/opencode/commands/`
-- Per-project: `.opencode/commands/`
+- Global: `~/.config/<local-runtime>/commands/`
+- Per-project: `<local-runtime-config>/commands/`
 
 **File format:** Markdown file with YAML frontmatter. Filename (minus `.md`) becomes the command name.
 
@@ -194,7 +194,7 @@ OpenCode has a separate "commands" concept distinct from skills.
 | **Size** | Can be large (thousands of tokens) | Should be small (< 500 lines SKILL.md; < 5000 tokens recommended) |
 | **Invocation** | Selected at session start; user switches between agents | Invoked mid-conversation by user (`/skill-name`) or by agent automatically |
 | **Identity** | Defines WHO the agent is | Defines WHAT the agent can do in a specific situation |
-| **File format** | Varies by platform (Claude: `.claude/agents/`, OpenCode: `.opencode/agents/`) | Standard: `<location>/skills/<name>/SKILL.md` |
+| **File format** | Varies by platform (Claude: `.claude/agents/`, local runner: `<local-runtime-config>/agents/`) | Standard: `<location>/skills/<name>/SKILL.md` |
 | **Standard** | Platform-specific | Agent Skills open standard (cross-platform) |
 | **Composability** | One agent active at a time | Multiple skills can activate per session |
 | **Output** | The agent's responses | Task-specific outputs within the agent's session |
@@ -225,7 +225,7 @@ The current D.A.R.T.E. pipeline produces **system prompts for LLM agents**. The 
 - Architecture spec (Planner)
 - System prompt in 10-component structure (Builder)
 - Test scenarios + evaluation (Reviewer)
-- Agent files for `.claude/agents/` and `.opencode/agents/`
+- Agent files for `.claude/agents/` and `<local-runtime-config>/agents/`
 
 The pipeline is optimized for creating agents with:
 - Identity with cognitive bias
@@ -244,7 +244,7 @@ The pipeline is optimized for creating agents with:
 
 **The Builder needs:**
 1. A different output format — SKILL.md instead of 10-component system prompt
-2. Knowledge of YAML frontmatter schema for both Claude Code and OpenCode
+2. Knowledge of YAML frontmatter schema for both Claude Code and local runner
 3. Understanding of progressive disclosure (what goes in SKILL.md vs. references/)
 4. String substitution syntax ($ARGUMENTS, $N, !`command`)
 5. A different "writing principles" set for skills (concise, task-focused, no identity)
@@ -294,8 +294,8 @@ NEW FILES TO CREATE:
 │       └── skill-anatomy-reference/
 │           ├── SKILL.md                         # Reference skill for anatomy knowledge
 │           └── references/
-│               └── platform-comparison.md       # Claude Code vs OpenCode differences
-└── .opencode/
+│               └── platform-comparison.md       # Claude Code vs local runner differences
+└── <local-runtime-config>/
     └── skills/
         └── prompt-architect-skill-planner/
             └── SKILL.md                         # Skill-creation overlay for planner agent
@@ -306,7 +306,7 @@ NEW FILES TO CREATE:
         └── skill-anatomy-reference/
             ├── SKILL.md                         # Reference skill for anatomy knowledge
             └── references/
-                └── platform-comparison.md       # Claude Code vs OpenCode differences
+                └── platform-comparison.md       # Claude Code vs local runner differences
 ```
 
 **Total new files: 14** (including this research document, which already exists at this path)
@@ -320,7 +320,7 @@ This approach:
 - Follows the skill system's own design philosophy (composable, on-demand context)
 - Keeps the agent files focused on their core competency (agent creation)
 - Adds skill-creation as a capability that loads only when needed
-- Works natively in both Claude Code and OpenCode
+- Works natively in both Claude Code and local runner
 
 **How it works in practice:**
 1. User invokes `/prompt-architect-skill-planner` (or the agent auto-loads it when the user mentions creating a skill)
@@ -343,7 +343,7 @@ This approach:
 - Step 3: Review — use reviewer agent WITH skill overlay, evaluate and test
 - File save locations (different from agent deliverables)
 - Final checklist for skill completion
-- Notes on cross-platform compatibility (Claude Code vs OpenCode)
+- Notes on cross-platform compatibility (Claude Code vs local runner)
 
 #### File 3: `.claude/skills/prompt-architect-skill-planner/SKILL.md`
 **Purpose:** Overlays skill-creation discovery and architecture process onto the Planner agent.
@@ -355,7 +355,7 @@ This approach:
 - Skill-specific discovery questionnaire (replaces agent questionnaire):
   1. Skill purpose: What task or knowledge does this skill provide?
   2. Invocation mode: User-only, agent-only, or both?
-  3. Target platforms: Claude Code, OpenCode, or both?
+  3. Target platforms: Claude Code, local runner, or both?
   4. Arguments: Does the skill accept arguments? What format?
   5. Context strategy: Inline or forked subagent?
   6. Tool restrictions: Should the skill limit available tools?
@@ -394,7 +394,7 @@ This approach:
   - Include edge case handling
   - Respect context budget constraints
 - Output format: complete SKILL.md file(s) plus supporting files
-- Platform-specific notes (what to include for Claude Code vs. OpenCode)
+- Platform-specific notes (what to include for Claude Code vs. local runner)
 
 #### File 5: `.claude/skills/prompt-architect-skill-reviewer/SKILL.md`
 **Purpose:** Overlays skill-review process onto the Reviewer agent.
@@ -406,7 +406,7 @@ This approach:
 - Skill-specific test scenarios (replaces agent test scenarios):
   1. Happy path: Typical invocation with expected arguments
   2. Edge case: Missing arguments, unusual input, boundary conditions
-  3. Cross-platform: Does the skill work on both Claude Code and OpenCode?
+  3. Cross-platform: Does the skill work on both Claude Code and local runner?
   4. Context budget: Is the description efficient? Is the body under recommended limits?
 - Skill-specific evaluation rubric (replaces 7-dimension agent rubric):
   | Dimension | Question |
@@ -434,13 +434,13 @@ This approach:
 - Link to `references/platform-comparison.md` for detailed platform differences
 
 #### File 7: `.claude/skills/skill-anatomy-reference/references/platform-comparison.md`
-**Purpose:** Detailed comparison of Claude Code vs. OpenCode skill support.
+**Purpose:** Detailed comparison of Claude Code vs. local runner skill support.
 **Content:** The platform comparison table from Part 1 of this document, formatted as a quick-reference for agents.
 
-#### Files 8-13: `.opencode/skills/` mirrors
-**Purpose:** Identical copies of files 3-7 for OpenCode compatibility. OpenCode searches `.opencode/skills/` natively. Since the Agent Skills standard is shared, the SKILL.md content is identical. The only differences are in frontmatter: OpenCode does not support Claude Code extensions like `disable-model-invocation`, `context`, `agent`, `hooks`, `user-invocable`, or `model`. The OpenCode versions use only standard frontmatter fields.
+#### Files 8-13: `<local-runtime-config>/skills/` mirrors
+**Purpose:** Identical copies of files 3-7 for local runner compatibility. local runner searches `<local-runtime-config>/skills/` natively. Since the Agent Skills standard is shared, the SKILL.md content is identical. The only differences are in frontmatter: local runner does not support Claude Code extensions like `disable-model-invocation`, `context`, `agent`, `hooks`, `user-invocable`, or `model`. The local runner versions use only standard frontmatter fields.
 
-**Important note:** Because OpenCode also searches `.claude/skills/`, the OpenCode copies could theoretically be omitted. However, for clarity and to follow the convention established by the existing workspace (which maintains separate `.claude/agents/` and `.opencode/agents/` files), we should create explicit OpenCode copies with OpenCode-appropriate frontmatter.
+**Important note:** Because local runner also searches `.claude/skills/`, the local runner copies could theoretically be omitted. However, for clarity and to follow the convention established by the existing workspace (which maintains separate `.claude/agents/` and `<local-runtime-config>/agents/` files), we should create explicit local runner copies with local runner-appropriate frontmatter.
 
 ### 3.4 Pipeline Flow for Skill Creation
 
@@ -472,7 +472,7 @@ Skill deliverables saved to:
   prompts/skills/[skill-name]/test-scenarios.md
   prompts/skills/[skill-name]/evaluation.md
   .claude/skills/[skill-name]/SKILL.md (+ supporting files)
-  .opencode/skills/[skill-name]/SKILL.md (+ supporting files)
+  <local-runtime-config>/skills/[skill-name]/SKILL.md (+ supporting files)
 ```
 
 ### 3.5 Deliverable File Structure for Created Skills
@@ -493,7 +493,7 @@ prompts/
       references/                      # Optional, from Builder
       scripts/                         # Optional, from Builder
       assets/                          # Optional, from Builder
-.opencode/
+<local-runtime-config>/
   skills/
     [skill-name]/
       SKILL.md                         # From Builder (production artifact)
@@ -510,13 +510,13 @@ prompts/
 
 1. **Approach: skill overlays vs. new agents.** Decision: skill overlays. Rationale: no file modifications, composable, follows the skill system's own philosophy, minimal token overhead (skills only load when needed).
 
-2. **OpenCode copies: separate or shared?** Decision: separate files with OpenCode-appropriate frontmatter. Rationale: consistency with existing workspace convention (separate agent files per platform), and OpenCode does not support Claude Code extended frontmatter fields.
+2. **local runner copies: separate or shared?** Decision: separate files with local runner-appropriate frontmatter. Rationale: consistency with existing workspace convention (separate agent files per platform), and local runner does not support Claude Code extended frontmatter fields.
 
-3. **Skill deliverable location.** Decision: `prompts/skills/[name]/` for architecture/test/eval, `.claude/skills/[name]/` and `.opencode/skills/[name]/` for production SKILL.md. Rationale: parallels the existing `prompts/agents/[name]/` convention while keeping production artifacts in their platform-native locations.
+3. **Skill deliverable location.** Decision: `prompts/skills/[name]/` for architecture/test/eval, `.claude/skills/[name]/` and `<local-runtime-config>/skills/[name]/` for production SKILL.md. Rationale: parallels the existing `prompts/agents/[name]/` convention while keeping production artifacts in their platform-native locations.
 
 ### 4.2 Open Questions
 
-1. **Should OpenCode commands also be supported?** OpenCode has a separate "commands" concept (`.opencode/commands/`) with different frontmatter (`agent`, `model`, `subtask`). Skills and commands serve overlapping but distinct purposes. The current plan focuses on skills only. Commands could be added later as a separate overlay.
+1. **Should local runner commands also be supported?** local runner has a separate "commands" concept (`<local-runtime-config>/commands/`) with different frontmatter (`agent`, `model`, `subtask`). Skills and commands serve overlapping but distinct purposes. The current plan focuses on skills only. Commands could be added later as a separate overlay.
 
 2. **Should the `skill-anatomy-reference` skill also be available as a knowledge base file?** Currently the research is in `knowledge/research/skill-creation-architecture.md` (this file). The `skill-anatomy-reference` skill provides a subset optimized for agent consumption. There is deliberate overlap — the knowledge file is comprehensive and human-readable; the skill is concise and agent-optimized.
 
@@ -535,7 +535,7 @@ This is the template the Planner will use instead of the agent architecture spec
 
 ## Requirements Summary
 - **Purpose**: [1 sentence — what task or knowledge this skill provides]
-- **Target Platforms**: [Claude Code / OpenCode / Both]
+- **Target Platforms**: [Claude Code / local runner / Both]
 - **Invocation Mode**: [User-only / Agent-only / Both]
 - **Scope**: [Project / Personal / Distributable]
 - **Arguments**: [None / Description of expected arguments]
@@ -588,7 +588,7 @@ This is the template the Planner will use instead of the agent architecture spec
 
 ## Cross-Platform Compatibility
 - **Claude Code specifics**: [features used that are CC-only]
-- **OpenCode specifics**: [any OpenCode-only considerations]
+- **local runner specifics**: [any local runner-only considerations]
 - **Fallback strategy**: [how the skill degrades on platforms that lack extended features]
 
 ## Success Criteria
@@ -622,6 +622,6 @@ This is the rubric the Reviewer will use instead of the 7-dimension agent rubric
 
 1. The PromptArchitect pipeline can support skill creation without any modifications to existing files.
 2. Skills-as-overlays is the natural extension mechanism: the existing agents gain new capabilities through the very system they will help users build.
-3. The Agent Skills open standard provides a stable foundation that works across Claude Code and OpenCode, reducing platform-specific complexity.
+3. The Agent Skills open standard provides a stable foundation that works across Claude Code and local runner, reducing platform-specific complexity.
 4. The main complexity lies in Claude Code's extended frontmatter fields, which need to be understood by the Planner (for architecture decisions) and the Builder (for correct YAML generation).
 5. The knowledge base should be updated with this research (this file) and the INDEX.md should be updated to reference it.
