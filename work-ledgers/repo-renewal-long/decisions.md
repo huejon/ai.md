@@ -1,5 +1,17 @@
 # Decisions
 
+## 2026-06-30 — Keep `work.md` as reusable active scope, not completed-run history
+
+Decision: refresh `work-ledgers/repo-renewal-long/work.md` so it describes the current recurring renewal contract instead of the completed legacy cleanup task.
+
+Rationale: historical cleanup evidence is already preserved in older ledger entries and findings. Leaving the old cleanup checklist as the active scope could bias future runs toward deletion-oriented work and obsolete run-specific boundaries.
+
+Evidence: `work.md` now directs future continuations to `cron-harness/README.md`, current handoff/state/run-log files, one narrow objective per run, safe auto-apply boundaries, durable evidence, and active commit/push precedence.
+
+Rollback: restore the previous `work.md` text from git history and remove `findings/2026-06-30-active-scope-refresh.md` if the ledger is intentionally narrowed back to a cleanup-only task.
+
+---
+
 ## 2026-06-30 — Active no-commit instructions override routine direct-commit policy
 
 Decision: harden the durable harness so the active user or command instruction for a run controls commit/push behavior. If that instruction forbids commit or push, the worker must not commit or push even when repository policy normally allows routine direct commits. If the instruction explicitly requests commit/push after validation, commit/push may happen only after checklist validation and durable ledger evidence.

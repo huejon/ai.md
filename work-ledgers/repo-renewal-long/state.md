@@ -1,5 +1,13 @@
 # State
 
+## 2026-06-30 — active scope refresh
+
+Primary loop state: `learn`; supporting actions: `apply` and `evaluate`.
+
+Current renewal objective completed: refresh `work-ledgers/repo-renewal-long/work.md` from a completed cleanup-run checklist into the reusable active scope contract for future long-horizon renewal continuations. Historical cleanup records remain intact in older ledger entries and findings; the active work scope now points workers back to the harness, one-objective loop selection, safe auto-apply boundaries, durable evidence, and active commit/push precedence.
+
+---
+
 ## 2026-06-30
 
 Loop state: `apply` -> `evaluate`.

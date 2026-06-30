@@ -1,5 +1,56 @@
 # Run Log
 
+## 2026-06-30 — Active scope refresh
+
+### Startup and inspection
+
+- Loaded `/var/home/core/.config/opencode/references/work-command.md` with the Python command requested by the user.
+- Read `AGENTS.md`, `README.md`, `knowledge/INDEX.md`, `cron-harness/README.md`, `cron-harness/evaluation-checklist.md`, `cron-harness/loop-engineering-checklist.md`, `cron-harness/cleanup-plan.md`, `WORKS.md`, and the active `work-ledgers/repo-renewal-long/` handoff/state/plan/decision/memory/work files.
+- Ran `git log --oneline -10` and `date` in `/var/home/core/workspace/jonloureiro/ai.md`.
+- Inspected `work-ledgers/repo-renewal-long/` and `cron-harness/` before editing.
+
+### Objective
+
+- Primary loop state: `learn`; supporting actions: `apply` and `evaluate`.
+- Narrow objective: refresh the active `work.md` scope so future renewal runs inherit the reusable harness contract rather than a completed cleanup-run checklist.
+
+### Changes
+
+- Updated `work-ledgers/repo-renewal-long/work.md` from completed cleanup scope to reusable active scope contract.
+- Added `work-ledgers/repo-renewal-long/findings/2026-06-30-active-scope-refresh.md` with evidence, acceptance criteria, and rollback.
+- Updated `state.md`, `plan.md`, `decisions.md`, `memory-candidates.md`, `run-log.md`, and `handoff.md` for this run.
+- No files were deleted; `LICENSE` was not edited; OpenCode did not commit or push. The active cron instruction requires coordinating process commit/push after validation passes.
+
+### Validation
+
+- `python - <<'PY' ... Path('~/.config/opencode/references/work-command.md') ... PY` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; printed the work command reference.
+- `rtk git log --oneline -10` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; latest commit shown was `6812e03 chore: harden renewal commit guard`.
+- `date` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; output `Tue Jun 30 08:01:30 AM UTC 2026`.
+- `rtk git diff -- work-ledgers/repo-renewal-long` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed only intended ledger edits before this run-log/handoff update.
+- `rtk git diff --check` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output, proving no diff whitespace errors or conflict markers.
+- `rtk git diff -- LICENSE` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output, proving `LICENSE` has no diff.
+- `rtk git diff --name-status` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed modified ledger files only among tracked files at that point.
+- `rtk git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed branch `main...origin/main`, modified ledger files, and one new finding file.
+
+### Reviews
+
+- `review-qwen`: PASS. Non-blocking notes: prefer naming one primary loop state; update `plan.md` step 5 from pending after judges.
+- `review-glm`: PASS. Non-blocking notes: finding line citation refers to prior revision, `memory-candidates.md` still has older local-overlay wording already deferred to next action, and judge validation was pending at review time.
+
+### Judges
+
+- `judge-qwen`: ACCEPT. Confirmed ledger-only scope, no `LICENSE` diff, no deletions, no commit/push, and objective quality.
+- `judge-glm`: ACCEPT WITH NOTES. Confirmed final checks and readiness; non-blocking notes were to mark `plan.md` step 5 done, clarify the pre-refresh citation, and leave older memory-candidate wording to the next run. The first two notes were fixed in this ledger update; the older memory-candidate wording remains the recorded next objective.
+
+### Coordinating process finalization
+
+- OpenCode attached run exit: 124 from the coordinating process timeout after 600 seconds; post-timeout `ps -eo pid,ppid,etime,cmd | grep -E '[o]pencode' || true` showed only the web server, so no active worker remained.
+- Follow-up judge runs completed: Qwen returned ACCEPT; GLM returned ACCEPT. OpenCode warned that `judge-qwen`/`judge-glm` are subagents and fell back to the default agent using the requested Qwen/GLM models, so the model-level panel evidence is present even though direct subagent invocation was not accepted by the CLI.
+- Coordinating process reran final checks and committed/pushed because the active cron instruction explicitly requires commit and push when validation passes.
+- Final rerun after judge-note fixes: `rtk git diff --check` exit 0 with no output; `rtk git diff -- LICENSE` exit 0 with no output; `rtk git status --short --branch --untracked-files=all` exit 0 showing only modified `work-ledgers/repo-renewal-long/` files and the new active-scope finding; `rtk git diff --name-status` exit 0 showing only modified tracked ledger files.
+
+---
+
 ## 2026-06-30 — No-commit guard hardening
 
 ### Startup and inspection

@@ -1,5 +1,31 @@
 # Handoff — repo-renewal-long
 
+## Current State — 2026-06-30 active scope refresh
+
+This run selected primary loop state `learn` with supporting `apply` and `evaluate` actions, and completed one narrow renewal objective: refresh `work-ledgers/repo-renewal-long/work.md` so it is a reusable active scope contract for future long-horizon renewal continuations, not a stale checklist for the completed legacy cleanup run.
+
+Changed files are limited to `work-ledgers/repo-renewal-long/` ledger updates and one new finding, `work-ledgers/repo-renewal-long/findings/2026-06-30-active-scope-refresh.md`. No deletion, deploy, publish, production mutation, external message, or `LICENSE` edit occurred. The active cron instruction requires coordinating process commit/push after validation passes.
+
+## Validation Evidence — 2026-06-30 active scope refresh
+
+- `python - <<'PY' ... Path('~/.config/opencode/references/work-command.md') ... PY` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; printed the requested work command reference.
+- `rtk git log --oneline -10` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; latest commit shown was `6812e03 chore: harden renewal commit guard`.
+- `date` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; output `Tue Jun 30 08:01:30 AM UTC 2026`.
+- `rtk git diff --check` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output.
+- `rtk git diff -- LICENSE` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; no output.
+- `rtk git diff -- work-ledgers/repo-renewal-long` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed only intended ledger scope/finding updates before final run-log/handoff evidence was added.
+- `rtk git status --short --branch --untracked-files=all` in `/var/home/core/workspace/jonloureiro/ai.md`: exit 0; showed branch `main...origin/main`, modified ledger files, and one new finding file.
+- Reviews: `review-qwen` PASS and `review-glm` PASS.
+- Judges: `judge-qwen` ACCEPT and `judge-glm` ACCEPT WITH NOTES; notes were non-blocking and the actionable plan/citation notes were fixed.
+- Coordinating process finalization: the attached OpenCode run timed out at 600 seconds, but no OpenCode worker remained afterward; follow-up Qwen and GLM model judge runs both accepted the diff. Final `git diff --check`, `git diff -- LICENSE`, and `git status --short --untracked-files=all` were rerun before commit/push.
+- Final rerun after judge-note fixes: `rtk git diff --check` exit 0 with no output; `rtk git diff -- LICENSE` exit 0 with no output; `rtk git status --short --branch --untracked-files=all` exit 0 showing only modified `work-ledgers/repo-renewal-long/` files and the new active-scope finding.
+
+## Next Action — 2026-06-30
+
+For the next continuation, start with `cron-harness/README.md` and this handoff, then choose a fresh single objective. Suggested next objective: review `memory-candidates.md` for obsolete local-overlay wording and either normalize it or move it into historical decisions only.
+
+---
+
 ## Current State — 2026-06-30 no-commit guard hardening
 
 This run selected loop state `apply` and completed the narrow objective to harden durable harness commit/push precedence. The harness now states that the active user/command instruction controls commit/push behavior for the current run: no commit/push if forbidden, and commit/push only after validation plus ledger evidence when explicitly requested.

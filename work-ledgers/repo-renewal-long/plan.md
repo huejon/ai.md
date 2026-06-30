@@ -1,5 +1,15 @@
 # Plan
 
+## 2026-06-30 — Active scope refresh
+
+1. Complete mandatory startup reads and command evidence. Done.
+2. Inspect the active harness, ledger handoff/state/run-log/work files, cleanup plan, board, and stale scope references. Done.
+3. Select one narrow objective: refresh `work.md` so future renewal runs inherit the reusable harness contract rather than the completed cleanup task. Done.
+4. Apply a small reversible ledger-only edit and add a dated finding with evidence and rollback. Done.
+5. Validate diff safety, license preservation, and repository status; run reviews and judges before final response. Done.
+
+---
+
 ## 2026-06-30 — No-commit guard hardening
 
 1. Complete mandatory startup reads and command evidence. Done.
