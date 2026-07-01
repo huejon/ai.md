@@ -1,6 +1,6 @@
 # Good AI-Assisted Research Methodology
 
-> Last updated: 2026-06-30
+> Last updated: 2026-07-01
 > Status: Current
 
 ## Summary
@@ -59,7 +59,7 @@ Track publication bias, language bias, sponsor/conflict signals, population/cont
 
 ## Maintenance Rules for This Repository
 
-- Keep `ai.md/knowledge` as curated research and methodology, not active runtime prompts or copied configuration.
+- Keep the current `research-notes/knowledge` tree as curated research and methodology, not active runtime prompts or copied configuration; old workspace paths are not authoritative when the repository has moved.
 - Mark each research file with `Last updated`, `Status`, and an index row containing freshness and value.
 - Treat files older than 3 months as `Aging`; older than 6 months as `Stale` until key claims are re-verified.
 - If a source path no longer exists locally, classify the file as valuable-but-needs-maintenance rather than silently trusting it.

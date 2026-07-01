@@ -1,6 +1,6 @@
 # Long-Horizon Repository Renewal Harness
 
-Purpose: continue a durable, evidence-backed renewal loop that keeps this agent-runtime operations repository minimal, high-signal, and useful for recurring long tasks, especially curated knowledge maintenance.
+Purpose: continue a durable, evidence-backed renewal loop that keeps this research operations repository minimal, high-signal, and useful for recurring long tasks, especially curated knowledge maintenance.
 
 This harness replaces one-off daily cron churn. Each run must learn from current repository evidence, improve one meaningful part of the operating system, and leave a durable handoff for the next run.
 
@@ -80,8 +80,8 @@ Do not preserve historical work solely because it exists. Preserve artifacts bec
 
 This section defines recurring responsibilities and boundaries. It does not by itself install a scheduler, daemon, or external automation.
 
-- **ai.md knowledge-curation cron**: operates in this repository. It refreshes research notes, classifies freshness/value, maintains `knowledge/INDEX.md`, updates harness/checklists, and records evidence in `.opencode/works/`. It may propose distilled runtime guidance but should not bulk-copy downstream configuration artifacts into this repo.
-- **Downstream application automation**: operates outside this repository under operator control. It may read curated `ai.md` knowledge, apply only minimal operational changes to external runtime artifacts, validate its own workspace, and record its own ledger.
+- **research-notes knowledge-curation cron**: operates in this repository. It refreshes research notes, classifies freshness/value, maintains `knowledge/INDEX.md`, updates harness/checklists, and records evidence in `.opencode/works/`. It may propose distilled runtime guidance but should not bulk-copy downstream configuration artifacts into this repo.
+- **Downstream application automation**: operates outside this repository under operator control. It may read curated `research-notes` knowledge, apply only minimal operational changes to external runtime artifacts, validate its own workspace, and record its own ledger.
 
 When a run touches research methodology, use the current methodology note as the default quality gate and record source hierarchy, search protocol, AI-audit checks, and review/judge evidence.
 

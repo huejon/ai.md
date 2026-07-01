@@ -7,7 +7,7 @@
 
 | File | Topic | Last Updated | Freshness | Value / Maintenance Notes |
 |---|---|---:|---|---|
-| [good-ai-assisted-research-methodology.md](research/good-ai-assisted-research-methodology.md) | Evidence-backed method for AI-assisted literature/scientific research and knowledge maintenance | 2026-06-30 | Current | Default methodology for new research runs; revise when review evidence shows a better practice. |
+| [good-ai-assisted-research-methodology.md](research/good-ai-assisted-research-methodology.md) | Evidence-backed method for AI-assisted literature/scientific research and knowledge maintenance | 2026-07-01 | Current | Default methodology for new research runs; current repo path is `research-notes`, not old workspace names. |
 | [context-engineering.md](research/context-engineering.md) | Context Engineering paradigm, attention budget, token economics | 2026-02-14 | Aging | Valuable; verify current vendor/blog claims before applying. |
 | [claude-4-best-practices.md](research/claude-4-best-practices.md) | Claude 4.x prompting best practices, breaking changes from Claude 3.x | 2026-02-14 | Aging | Valuable but model/vendor-specific; re-check current docs before prompt policy changes. |
 | [multi-agent-patterns.md](research/multi-agent-patterns.md) | Multi-agent architectures, orchestration patterns, context isolation | 2026-02-14 | Aging | Valuable principles; re-check framework docs and empirical claims before relying on numbers. |

@@ -1,10 +1,10 @@
-# AGENTS.md — agent-runtime Prompt Operations
+# AGENTS.md — Research Notes
 
 Universal rules for agents operating in this repository.
 
 ## Purpose
 
-This repository is an owned prompt-engineering operations workspace for agent-runtime. It now keeps renewal harnesses, checklists, and curated research context. It does not assume or contain any specific downstream runtime configuration repository. Outputs are cognitive configuration and operational documentation, not application code.
+This repository is an owned research and prompt-engineering operations workspace. It keeps renewal harnesses, checklists, and curated research context. It does not assume or contain any specific downstream runtime configuration repository. Outputs are cognitive configuration and operational documentation, not application code.
 
 ## Operating Model
 
@@ -34,7 +34,7 @@ The `/daily-cron` command name is retained for compatibility, but its job is lon
 
 Recurring responsibility is split:
 
-- The **ai.md knowledge-curation cron** maintains curated research, `knowledge/INDEX.md`, and harness guidance in this repository.
+- The **research-notes knowledge-curation cron** maintains curated research, `knowledge/INDEX.md`, and harness guidance in this repository.
 - **Downstream application automation** may run separately under operator control to read this repository's curated findings and update only distilled runtime guidance outside this repository.
 
 Harness gates:
