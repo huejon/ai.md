@@ -1,627 +1,137 @@
-# Skill Creation Architecture — Research & Plan
+# Skill Creation Architecture
 
-> Last updated: 2026-02-14
-> Status: Aging
-> **NOTE (2026-02-15)**: File structure references in this document use the old `prompts/agents/` and `prompts/skills/` convention. The current workspace structure uses `agents/` and `skills/` directly (no `prompts/` prefix). See `AGENTS.md` for the current structure.
+> Last updated: 2026-07-01
+> Status: Current
 
 ## Summary
 
-This document contains deep research findings on the anatomy of skills for Claude Code and local runner, a gap analysis of the current PromptArchitect pipeline, and a detailed architecture plan for adding skill creation capability to the existing agents without modifying any existing files.
+Agent Skills are compact, on-demand capability packages: a directory named for the skill, a required `SKILL.md` with YAML frontmatter plus Markdown, and optional `scripts/`, `references/`, and `assets/` resources. Use skills for repeatable task procedures or domain knowledge that should not live permanently in an agent prompt. Use commands for user-invoked workflow templates, agents for distinct reasoning roles or tool/autonomy boundaries, and references for passive knowledge that does not need invocation behavior.
+
+The February 2026 implementation plan in the previous version of this note is retired for this repository. Its proposed `prompts/`, `.claude/`, local-runtime skill mirrors, and root runtime-copy conventions are obsolete here. Current repository policy keeps this workspace as compact research and renewal guidance, not active runtime configuration.
 
 ## Sources
 
-- [Extend Claude with skills — Claude Code Docs](https://code.claude.com/docs/en/skills)
-- [Agent Skills Open Standard — Specification](https://agentskills.io/specification)
-- [Agent Skills GitHub — anthropics/skills](https://github.com/anthropics/skills/blob/main/spec/agent-skills-spec.md)
-- [local runner Skills Documentation](vendor skill documentation checked during original research)
-- [local runner Commands Documentation](vendor command documentation checked during original research)
-- [local runner Agents Documentation](vendor agent documentation checked during original research)
-- [Claude Code Customization Guide](https://alexop.dev/posts/claude-code-customization-guide-claudemd-skills-subagents/)
-- [Claude Code Merges Slash Commands Into Skills](https://medium.com/@joe.njenga/claude-code-merges-slash-commands-into-skills-dont-miss-your-update-8296f3989697)
+| Source | Source class | Checked | Confidence | Notes |
+|---|---|---:|---|---|
+| Agent Skills specification, <https://agentskills.io/specification> | Open standard / primary spec | 2026-07-01 | High | Defines directory layout, `SKILL.md` frontmatter, naming constraints, and progressive disclosure. |
+| Anthropic Agent Skills overview, <https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview> | Official vendor docs | 2026-07-01 | High | Confirms metadata/instructions/resources loading levels and recommends keeping the main skill body compact. |
+| Claude Code skills docs, <https://code.claude.com/docs/en/skills> | Official product docs | 2026-07-01 | High | Confirms Claude Code follows Agent Skills and extends skills with direct slash invocation, subagent execution, and dynamic context injection. |
+| OpenCode skills docs, <https://opencode.ai/docs/skills/> | Official product docs | 2026-07-01 | High | Confirms native on-demand `skill` tool, search paths, recognized fields, regex constraints, and permission controls. |
+| OpenCode commands docs, <https://opencode.ai/docs/commands/> | Official product docs | 2026-07-01 | High | Confirms commands remain a separate markdown/config template mechanism. |
+| Local installed OpenCode evidence | Local command output | 2026-07-01 | High | `opencode --version` reported 1.17.12 and `opencode debug config` parsed the local configuration. |
+| Repository policy: `AGENTS.md`, `README.md`, `cron-harness/README.md` | Local canonical policy | 2026-07-01 | High | Forbids reintroducing root runtime config copies and keeps this repo focused on research notes and harness artifacts. |
 
----
+## Key Findings
 
-## Part 1: Research Findings
+### 1) Agent Skills standard anatomy
 
-### 1.1 Agent Skills Open Standard (agentskills.io)
+- A skill is a directory whose name matches the skill name.
+- `SKILL.md` is required and contains YAML frontmatter followed by Markdown instructions.
+- Required fields: `name` and `description`.
+- Standard optional fields: `license`, `compatibility`, and `metadata`; the spec also documents experimental `allowed-tools`.
+- Name constraints: 1-64 characters, lowercase alphanumeric plus single hyphen separators, no leading/trailing/consecutive hyphens, and must match the parent directory.
+- Description constraints: 1-1024 characters and should say both what the skill does and when to use it.
+- Progressive disclosure is the core design pattern: metadata is always visible, the `SKILL.md` body loads on trigger, and bundled resources load only as needed.
 
-Both Claude Code and local runner implement the **Agent Skills** open standard. This is the baseline format.
+### 2) Keep the main skill small
 
-**Directory structure:**
-```
-skill-name/
-├── SKILL.md           # Required — main instructions
-├── scripts/           # Optional — executable code
-├── references/        # Optional — additional documentation
-└── assets/            # Optional — templates, images, data files
-```
+Anthropic recommends keeping the `SKILL.md` body under roughly 5k tokens and moving detail into supporting files. For this repository's guidance, treat the main skill as the decision/procedure layer, not a dump of docs. Put long examples, reference tables, templates, or scripts in supporting files only when the runtime actually needs them.
 
-**SKILL.md format — Frontmatter (standard fields):**
+### 3) Platform behavior differs after the shared standard
 
-| Field | Required | Constraints |
-|---|---|---|
-| `name` | Yes | Max 64 chars. Lowercase letters, numbers, hyphens only. No leading/trailing/consecutive hyphens. Must match directory name. Pattern: `^[a-z0-9]+(-[a-z0-9]+)*$` |
-| `description` | Yes | 1-1024 chars. Should describe what the skill does AND when to use it. Include keywords that help agents identify relevant tasks. |
-| `license` | No | License name or reference to bundled license file. |
-| `compatibility` | No | Max 500 chars. Environment requirements (product, system packages, network). |
-| `metadata` | No | Arbitrary string-to-string key-value mapping. |
-| `allowed-tools` | No | Space-delimited list of pre-approved tools. Experimental. |
+Agent Skills provide the base package format, but product behavior varies. Claude Code can expose skills as slash commands and adds invocation/context features. OpenCode loads skills through the native `skill` tool, recognizes only standard metadata fields, and keeps commands as a separate feature.
 
-**SKILL.md format — Body:**
-- Markdown content after frontmatter
-- No format restrictions
-- Recommended sections: step-by-step instructions, examples of inputs/outputs, common edge cases
-- Keep under 500 lines; move detailed content to referenced files
+### 4) This repository should not host runtime skill copies
 
-**Progressive disclosure model:**
-1. **Metadata** (~100 tokens): `name` and `description` loaded at startup for all skills
-2. **Instructions** (< 5000 tokens recommended): Full `SKILL.md` body loaded when skill is activated
-3. **Resources** (as needed): Files in `scripts/`, `references/`, `assets/` loaded only when required
+Current repository policy says `research-notes` is an evidence and methodology workspace. It should maintain compact architecture guidance and evaluation checklists, not `.claude/skills/`, `.opencode/skills/`, `prompts/`, root `skills/`, or mirrored runtime artifacts. If downstream systems need a skill, create it in the operator-designated runtime workspace and cite this note as guidance.
 
-### 1.2 Claude Code Skills — Platform Extensions
+## Platform Comparison
 
-Claude Code extends the standard with additional features.
-
-**Storage locations (priority order):**
-
-| Level | Path | Scope |
-|---|---|---|
-| Enterprise | Managed settings | All users in org |
-| Personal | `~/.claude/skills/<skill-name>/SKILL.md` | All your projects |
-| Project | `.claude/skills/<skill-name>/SKILL.md` | This project only |
-| Plugin | `<plugin>/skills/<skill-name>/SKILL.md` | Where plugin is enabled |
-
-Higher-priority locations win when names conflict. Plugin skills use `plugin-name:skill-name` namespace.
-
-**Claude Code extended frontmatter fields:**
-
-| Field | Default | Description |
-|---|---|---|
-| `name` | directory name | Display name and slash-command name |
-| `description` | first paragraph | What the skill does and when to use it |
-| `argument-hint` | none | Hint shown during autocomplete (e.g., `[issue-number]`) |
-| `disable-model-invocation` | `false` | If `true`, only user can invoke via `/name` |
-| `user-invocable` | `true` | If `false`, hidden from `/` menu; only Claude can invoke |
-| `allowed-tools` | none | Tools Claude can use without permission when skill is active |
-| `model` | none | Model to use when skill is active |
-| `context` | none | Set to `fork` to run in forked subagent context |
-| `agent` | `general-purpose` | Which subagent type for `context: fork` |
-| `hooks` | none | Lifecycle hooks scoped to skill |
-
-**Invocation control matrix:**
-
-| Frontmatter | User can invoke | Claude can invoke | Context loading |
+| Dimension | Agent Skills standard | Claude Code | OpenCode |
 |---|---|---|---|
-| (default) | Yes | Yes | Description always in context; full skill on invoke |
-| `disable-model-invocation: true` | Yes | No | Description NOT in context; loads on user invoke |
-| `user-invocable: false` | No | Yes | Description always in context; loads on Claude invoke |
-
-**String substitutions in skill content:**
-- `$ARGUMENTS` — All arguments passed
-- `$ARGUMENTS[N]` or `$N` — Specific argument by 0-based index
-- `${CLAUDE_SESSION_ID}` — Current session ID
-
-**Dynamic context injection:**
-- `!`command`` syntax runs shell commands before skill content is sent to Claude
-- Output replaces the placeholder; Claude receives fully-rendered content
-
-**Skill content types:**
-- **Reference content**: Knowledge Claude applies to current work (conventions, patterns, style guides). Runs inline.
-- **Task content**: Step-by-step instructions for specific actions. Often `disable-model-invocation: true`.
-
-**Context budget:** Skill descriptions loaded into context budget of 2% of context window (fallback: 16,000 chars). Override via `SLASH_COMMAND_TOOL_CHAR_BUDGET` env var.
-
-**Backward compatibility:** `.claude/commands/` files still work with the same frontmatter support. Skills take precedence when names conflict.
-
-### 1.3 local runner Skills — Platform Extensions
-
-local runner also implements the Agent Skills standard with its own extensions.
-
-**Storage locations (searched by walking up from cwd to git worktree root):**
-
-| Path | Scope |
-|---|---|
-| `<local-runtime-config>/skills/<name>/SKILL.md` | Project-local |
-| `~/.config/<local-runtime>/skills/<name>/SKILL.md` | Global |
-| `.claude/skills/<name>/SKILL.md` | Cross-compatible (project) |
-| `~/.claude/skills/<name>/SKILL.md` | Cross-compatible (global) |
-| `.agents/skills/<name>/SKILL.md` | Generic (project) |
-| `~/.agents/skills/<name>/SKILL.md` | Generic (global) |
-
-**local runner frontmatter fields (standard only):**
-- `name` (required)
-- `description` (required)
-- `license` (optional)
-- `compatibility` (optional)
-- `metadata` (optional)
-
-local runner does NOT extend the frontmatter with `disable-model-invocation`, `context`, `agent`, `hooks`, `argument-hint`, `user-invocable`, or `model` fields.
-
-**Invocation mechanism:** Agents access skills through the native `skill` tool by calling `skill({ name: "skill-name" })`. Available skills appear in the tool description with name and description pairs.
-
-**Permission control (in `local-runner-config.json`):**
-```json
-{
-  "permission": {
-    "skill": {
-      "*": "allow",
-      "pattern-*": "deny"
-    }
-  }
-}
-```
-
-Behaviors: `allow` (immediate), `deny` (hidden), `ask` (user approval required).
-
-**Per-agent skill permissions (in agent frontmatter):**
-```yaml
-permission:
-  skill:
-    "documents-*": "allow"
-```
-
-### 1.4 local runner Custom Commands
-
-local runner has a separate "commands" concept distinct from skills.
-
-**Storage locations:**
-- Global: `~/.config/<local-runtime>/commands/`
-- Per-project: `<local-runtime-config>/commands/`
-
-**File format:** Markdown file with YAML frontmatter. Filename (minus `.md`) becomes the command name.
-
-**Frontmatter fields:**
-
-| Field | Required | Description |
-|---|---|---|
-| `description` | No | Brief description shown in TUI |
-| `agent` | No | Which agent executes the command |
-| `model` | No | Override model for this command |
-| `subtask` | No | Forces subagent invocation, isolating context |
-
-**Template features:**
-- `$ARGUMENTS`, `$1`, `$2`, `$3` — argument substitution
-- `!`command`` — shell output injection
-- `@filename` — file content inclusion
-
-### 1.5 Key Differences: System Prompt/Agent vs. Skill
-
-| Dimension | System Prompt / Agent | Skill |
-|---|---|---|
-| **Purpose** | Defines the agent's core identity, reasoning strategy, and behavioral constraints | Extends an agent's capabilities for a specific task or domain |
-| **Persistence** | Always loaded into context | Loaded on demand (description always; full content on invoke) |
-| **Scope** | Governs all of the agent's behavior | Governs behavior only when the skill is active |
-| **Size** | Can be large (thousands of tokens) | Should be small (< 500 lines SKILL.md; < 5000 tokens recommended) |
-| **Invocation** | Selected at session start; user switches between agents | Invoked mid-conversation by user (`/skill-name`) or by agent automatically |
-| **Identity** | Defines WHO the agent is | Defines WHAT the agent can do in a specific situation |
-| **File format** | Varies by platform (Claude: `.claude/agents/`, local runner: `<local-runtime-config>/agents/`) | Standard: `<location>/skills/<name>/SKILL.md` |
-| **Standard** | Platform-specific | Agent Skills open standard (cross-platform) |
-| **Composability** | One agent active at a time | Multiple skills can activate per session |
-| **Output** | The agent's responses | Task-specific outputs within the agent's session |
-
-### 1.6 What Makes a Good Skill vs. What Makes a Good Agent
-
-**Good candidates for skills:**
-- Repeatable workflows (deploy, release, review PR)
-- Domain knowledge injection (API conventions, coding standards)
-- Template-driven tasks (create component, scaffold module)
-- Research/exploration tasks (deep-dive into codebase)
-- Tool-specific procedures (git workflows, CI/CD)
-
-**Good candidates for agents:**
-- Distinct personas with different cognitive biases
-- Fundamentally different reasoning strategies
-- Different tool access requirements
-- Different autonomy levels
-- Long-running, identity-dependent workflows
-
----
-
-## Part 2: Gap Analysis — Current Pipeline vs. Skill Creation
-
-### 2.1 What the Current Pipeline Supports
-
-The current D.A.R.T.E. pipeline produces **system prompts for LLM agents**. The output is:
-- Architecture spec (Planner)
-- System prompt in 10-component structure (Builder)
-- Test scenarios + evaluation (Reviewer)
-- Agent files for `.claude/agents/` and `<local-runtime-config>/agents/`
-
-The pipeline is optimized for creating agents with:
-- Identity with cognitive bias
-- Complex reasoning strategies
-- Full tool design
-- Multi-component output format
-- Safety layers
-
-### 2.2 What Is Missing for Skill Creation
-
-**The Planner needs:**
-1. A different discovery questionnaire — skills need different requirements than agents
-2. Knowledge of the Agent Skills standard (frontmatter fields, naming constraints, directory structure)
-3. A different architecture spec template — skills do not have identity, cognitive bias, or reasoning strategy
-4. Understanding of skill-specific design decisions: invocation control, context strategy (fork vs. inline), tool restrictions, argument design
-
-**The Builder needs:**
-1. A different output format — SKILL.md instead of 10-component system prompt
-2. Knowledge of YAML frontmatter schema for both Claude Code and local runner
-3. Understanding of progressive disclosure (what goes in SKILL.md vs. references/)
-4. String substitution syntax ($ARGUMENTS, $N, !`command`)
-5. A different "writing principles" set for skills (concise, task-focused, no identity)
-
-**The Reviewer needs:**
-1. A different evaluation rubric — skills have different quality dimensions than agents
-2. Different test scenarios — skill invocation, argument handling, context budget, cross-platform compatibility
-3. Understanding of what makes a skill good vs. bad (specificity of description, progressive disclosure, naming)
-
-**The pipeline needs:**
-1. A meta-task template for skill creation (parallel to `meta-task-create-agent.md`)
-2. Reference documentation on skill anatomy for all agents to consume
-3. A file structure convention for skill deliverables
-
-### 2.3 What Does NOT Need to Change
-
-- The D.A.R.T.E. framework itself (5 phases still apply)
-- The 3-agent pipeline structure (Planner -> Builder -> Reviewer)
-- The knowledge management system
-- The existing agent files (constraint: additive-only)
-- The existing AGENTS.md and CLAUDE.md
-
----
-
-## Part 3: Architecture Plan — New Files
-
-### 3.1 File Plan Overview
-
-All new files are additive. No existing files are modified.
-
-```
-NEW FILES TO CREATE:
-├── knowledge/
-│   └── research/
-│       └── skill-creation-architecture.md      # THIS FILE (research + plan)
-├── prompts/
-│   └── templates/
-│       └── meta-task-create-skill.md           # Pipeline orchestration template for skills
-├── .claude/
-│   └── skills/
-│       └── prompt-architect-skill-planner/
-│           └── SKILL.md                         # Skill-creation overlay for planner agent
-│       └── prompt-architect-skill-builder/
-│           └── SKILL.md                         # Skill-creation overlay for builder agent
-│       └── prompt-architect-skill-reviewer/
-│           └── SKILL.md                         # Skill-creation overlay for reviewer agent
-│       └── skill-anatomy-reference/
-│           ├── SKILL.md                         # Reference skill for anatomy knowledge
-│           └── references/
-│               └── platform-comparison.md       # Claude Code vs local runner differences
-└── <local-runtime-config>/
-    └── skills/
-        └── prompt-architect-skill-planner/
-            └── SKILL.md                         # Skill-creation overlay for planner agent
-        └── prompt-architect-skill-builder/
-            └── SKILL.md                         # Skill-creation overlay for builder agent
-        └── prompt-architect-skill-reviewer/
-            └── SKILL.md                         # Skill-creation overlay for reviewer agent
-        └── skill-anatomy-reference/
-            ├── SKILL.md                         # Reference skill for anatomy knowledge
-            └── references/
-                └── platform-comparison.md       # Claude Code vs local runner differences
-```
-
-**Total new files: 14** (including this research document, which already exists at this path)
-
-### 3.2 Design Rationale: Skills as Overlays
-
-The key design decision: rather than modifying the existing agent files, we create **skills that overlay skill-creation knowledge** onto the existing agents. When a user wants to create a skill instead of an agent, they invoke the appropriate skill overlay, which loads skill-specific instructions into the agent's context.
-
-This approach:
-- Preserves all existing files unchanged
-- Follows the skill system's own design philosophy (composable, on-demand context)
-- Keeps the agent files focused on their core competency (agent creation)
-- Adds skill-creation as a capability that loads only when needed
-- Works natively in both Claude Code and local runner
-
-**How it works in practice:**
-1. User invokes `/prompt-architect-skill-planner` (or the agent auto-loads it when the user mentions creating a skill)
-2. The existing `prompt-architect-planner` agent receives skill-specific discovery questions and architecture spec template as additional context
-3. The Planner produces a skill architecture spec instead of an agent architecture spec
-4. Same flow continues with Builder and Reviewer skill overlays
-
-### 3.3 Detailed File Descriptions
-
-#### File 1: `knowledge/research/skill-creation-architecture.md`
-**Purpose:** This file. Research findings and architecture plan. Used by all agents as reference.
-**Status:** Already created (this document).
-
-#### File 2: `prompts/templates/meta-task-create-skill.md`
-**Purpose:** Pipeline orchestration template for creating a new skill. Parallel to `meta-task-create-agent.md`.
-**Content outline:**
-- Prerequisites (what you need before starting)
-- Step 1: Plan — use planner agent WITH skill overlay, produce skill architecture spec
-- Step 2: Build — use builder agent WITH skill overlay, produce SKILL.md and supporting files
-- Step 3: Review — use reviewer agent WITH skill overlay, evaluate and test
-- File save locations (different from agent deliverables)
-- Final checklist for skill completion
-- Notes on cross-platform compatibility (Claude Code vs local runner)
-
-#### File 3: `.claude/skills/prompt-architect-skill-planner/SKILL.md`
-**Purpose:** Overlays skill-creation discovery and architecture process onto the Planner agent.
-**Frontmatter:**
-- `name: prompt-architect-skill-planner`
-- `description`: Activates skill-creation mode for the Planner. Use when designing a new skill (not an agent). Modifies the discovery questionnaire and architecture spec template to focus on skill anatomy.
-- `disable-model-invocation: true` (user should explicitly invoke this)
-**Content outline:**
-- Skill-specific discovery questionnaire (replaces agent questionnaire):
-  1. Skill purpose: What task or knowledge does this skill provide?
-  2. Invocation mode: User-only, agent-only, or both?
-  3. Target platforms: Claude Code, local runner, or both?
-  4. Arguments: Does the skill accept arguments? What format?
-  5. Context strategy: Inline or forked subagent?
-  6. Tool restrictions: Should the skill limit available tools?
-  7. Supporting files: Does the skill need scripts, references, or assets?
-  8. Dynamic context: Does the skill need shell command output injection?
-  9. Scope: Project-only, personal, or distributable?
-  10. Naming: What name fits the `^[a-z0-9]+(-[a-z0-9]+)*$` pattern?
-- Skill architecture spec template (replaces agent architecture spec):
-  - Requirements summary (purpose, platforms, invocation mode, scope)
-  - Naming validation
-  - Frontmatter design (platform-specific fields)
-  - Content strategy (what goes in SKILL.md vs. references/)
-  - Argument design
-  - Progressive disclosure plan
-  - Cross-platform compatibility notes
-
-#### File 4: `.claude/skills/prompt-architect-skill-builder/SKILL.md`
-**Purpose:** Overlays skill-writing process onto the Builder agent.
-**Frontmatter:**
-- `name: prompt-architect-skill-builder`
-- `description`: Activates skill-creation mode for the Builder. Use when writing a SKILL.md file from a skill architecture spec.
-- `disable-model-invocation: true`
-**Content outline:**
-- Skill construction process (replaces 10-component agent structure):
-  1. Validate architecture spec contains skill-specific requirements
-  2. Compose YAML frontmatter (platform-appropriate fields)
-  3. Write skill body content (instructions, not identity)
-  4. Design supporting files if needed (references/, scripts/, assets/)
-  5. Validate naming constraints
-  6. Check progressive disclosure (SKILL.md under 500 lines, body under 5000 tokens)
-  7. Add string substitutions where appropriate ($ARGUMENTS, !`command`)
-- Skill writing principles (different from agent writing):
-  - Task-focused, not identity-focused
-  - Concise instructions, not behavioral frameworks
-  - Show expected inputs/outputs
-  - Include edge case handling
-  - Respect context budget constraints
-- Output format: complete SKILL.md file(s) plus supporting files
-- Platform-specific notes (what to include for Claude Code vs. local runner)
-
-#### File 5: `.claude/skills/prompt-architect-skill-reviewer/SKILL.md`
-**Purpose:** Overlays skill-review process onto the Reviewer agent.
-**Frontmatter:**
-- `name: prompt-architect-skill-reviewer`
-- `description`: Activates skill-review mode for the Reviewer. Use when reviewing a SKILL.md for quality, testing invocation patterns, and evaluating cross-platform compatibility.
-- `disable-model-invocation: true`
-**Content outline:**
-- Skill-specific test scenarios (replaces agent test scenarios):
-  1. Happy path: Typical invocation with expected arguments
-  2. Edge case: Missing arguments, unusual input, boundary conditions
-  3. Cross-platform: Does the skill work on both Claude Code and local runner?
-  4. Context budget: Is the description efficient? Is the body under recommended limits?
-- Skill-specific evaluation rubric (replaces 7-dimension agent rubric):
-  | Dimension | Question |
-  |---|---|
-  | Description quality | Does the description help agents decide when to load this skill? |
-  | Naming | Does the name follow the pattern and clearly indicate purpose? |
-  | Conciseness | Is the SKILL.md under 500 lines / 5000 tokens? |
-  | Progressive disclosure | Is content split appropriately between SKILL.md and references? |
-  | Argument handling | Are arguments well-documented and edge cases handled? |
-  | Cross-platform | Does it work on all target platforms without platform-specific breakage? |
-  | Invocation control | Is the invocation mode (user/agent/both) appropriate for the skill's purpose? |
-- Decision: APPROVE / APPROVE WITH NOTES / REJECT (same as agent reviews)
-
-#### File 6: `.claude/skills/skill-anatomy-reference/SKILL.md`
-**Purpose:** Reference skill that provides on-demand knowledge about skill anatomy. Agents can load this when they need platform-specific details.
-**Frontmatter:**
-- `name: skill-anatomy-reference`
-- `description`: Reference documentation on the Agent Skills standard and platform-specific extensions. Use when creating, reviewing, or modifying skills to ensure compliance with the standard.
-- `user-invocable: false` (only agents should load this)
-**Content outline:**
-- Quick reference: YAML frontmatter schema
-- Quick reference: naming constraints
-- Quick reference: directory structure
-- Quick reference: progressive disclosure model
-- Link to `references/platform-comparison.md` for detailed platform differences
-
-#### File 7: `.claude/skills/skill-anatomy-reference/references/platform-comparison.md`
-**Purpose:** Detailed comparison of Claude Code vs. local runner skill support.
-**Content:** The platform comparison table from Part 1 of this document, formatted as a quick-reference for agents.
-
-#### Files 8-13: `<local-runtime-config>/skills/` mirrors
-**Purpose:** Identical copies of files 3-7 for local runner compatibility. local runner searches `<local-runtime-config>/skills/` natively. Since the Agent Skills standard is shared, the SKILL.md content is identical. The only differences are in frontmatter: local runner does not support Claude Code extensions like `disable-model-invocation`, `context`, `agent`, `hooks`, `user-invocable`, or `model`. The local runner versions use only standard frontmatter fields.
-
-**Important note:** Because local runner also searches `.claude/skills/`, the local runner copies could theoretically be omitted. However, for clarity and to follow the convention established by the existing workspace (which maintains separate `.claude/agents/` and `<local-runtime-config>/agents/` files), we should create explicit local runner copies with local runner-appropriate frontmatter.
-
-### 3.4 Pipeline Flow for Skill Creation
-
-```
-User has an idea for a skill
-        │
-        v
-Step 1: PLAN (prompt-architect-planner + /prompt-architect-skill-planner)
-        │  Discovery: skill-specific questionnaire (10 questions)
-        │  Architecture: skill architecture spec (not agent architecture spec)
-        │  Output: skill-architecture-spec.md
-        │
-        v
-Step 2: BUILD (prompt-architect-builder + /prompt-architect-skill-builder)
-        │  Input: skill architecture spec
-        │  Construction: SKILL.md + supporting files
-        │  Output: complete skill directory
-        │
-        v
-Step 3: REVIEW (prompt-architect-reviewer + /prompt-architect-skill-reviewer)
-        │  Test: 4 skill-specific test scenarios
-        │  Evaluate: 7 skill-specific dimensions
-        │  Output: test-scenarios.md + evaluation.md
-        │  Decision: APPROVE / APPROVE WITH NOTES / REJECT
-        │
-        v
-Skill deliverables saved to:
-  prompts/skills/[skill-name]/skill-architecture-spec.md
-  prompts/skills/[skill-name]/test-scenarios.md
-  prompts/skills/[skill-name]/evaluation.md
-  .claude/skills/[skill-name]/SKILL.md (+ supporting files)
-  <local-runtime-config>/skills/[skill-name]/SKILL.md (+ supporting files)
-```
-
-### 3.5 Deliverable File Structure for Created Skills
-
-When the pipeline creates a new skill, the output goes to:
-
-```
-prompts/
-  skills/                              # NEW directory (parallel to prompts/agents/)
-    [skill-name]/
-      skill-architecture-spec.md       # From Planner
-      test-scenarios.md                # From Reviewer
-      evaluation.md                    # From Reviewer
-.claude/
-  skills/
-    [skill-name]/
-      SKILL.md                         # From Builder (production artifact)
-      references/                      # Optional, from Builder
-      scripts/                         # Optional, from Builder
-      assets/                          # Optional, from Builder
-<local-runtime-config>/
-  skills/
-    [skill-name]/
-      SKILL.md                         # From Builder (production artifact)
-      references/                      # Optional, from Builder
-      scripts/                         # Optional, from Builder
-      assets/                          # Optional, from Builder
-```
-
----
-
-## Part 4: Open Questions and Decisions
-
-### 4.1 Resolved Decisions
-
-1. **Approach: skill overlays vs. new agents.** Decision: skill overlays. Rationale: no file modifications, composable, follows the skill system's own philosophy, minimal token overhead (skills only load when needed).
-
-2. **local runner copies: separate or shared?** Decision: separate files with local runner-appropriate frontmatter. Rationale: consistency with existing workspace convention (separate agent files per platform), and local runner does not support Claude Code extended frontmatter fields.
-
-3. **Skill deliverable location.** Decision: `prompts/skills/[name]/` for architecture/test/eval, `.claude/skills/[name]/` and `<local-runtime-config>/skills/[name]/` for production SKILL.md. Rationale: parallels the existing `prompts/agents/[name]/` convention while keeping production artifacts in their platform-native locations.
-
-### 4.2 Open Questions
-
-1. **Should local runner commands also be supported?** local runner has a separate "commands" concept (`<local-runtime-config>/commands/`) with different frontmatter (`agent`, `model`, `subtask`). Skills and commands serve overlapping but distinct purposes. The current plan focuses on skills only. Commands could be added later as a separate overlay.
-
-2. **Should the `skill-anatomy-reference` skill also be available as a knowledge base file?** Currently the research is in `knowledge/research/skill-creation-architecture.md` (this file). The `skill-anatomy-reference` skill provides a subset optimized for agent consumption. There is deliberate overlap — the knowledge file is comprehensive and human-readable; the skill is concise and agent-optimized.
-
-3. **Should the meta-task template reference existing agent meta-task or be standalone?** Recommendation: standalone, but noting the parallel with `meta-task-create-agent.md` for users familiar with the agent pipeline.
-
-4. **Should the AGENTS.md or CLAUDE.md be updated to mention skill creation?** The constraint says NO modifications to existing files. However, the user may want to add skill-related slash commands to CLAUDE.md in a future step. This plan does not include those modifications.
-
----
-
-## Part 5: Skill Architecture Spec Template
-
-This is the template the Planner will use instead of the agent architecture spec when creating skills.
-
-```markdown
-# Skill Architecture Spec: [Skill Name]
-
-## Requirements Summary
-- **Purpose**: [1 sentence — what task or knowledge this skill provides]
-- **Target Platforms**: [Claude Code / local runner / Both]
-- **Invocation Mode**: [User-only / Agent-only / Both]
-- **Scope**: [Project / Personal / Distributable]
-- **Arguments**: [None / Description of expected arguments]
-
-## Assumptions
-<!-- List any decisions made due to missing information -->
-
-## Naming
-- **Skill name**: [must match ^[a-z0-9]+(-[a-z0-9]+)*$, max 64 chars]
-- **Directory name**: [must match skill name]
-- **Validation**: [confirm name is valid]
-
-## Frontmatter Design
-### Standard Fields (all platforms)
-- **name**: [skill name]
-- **description**: [1-1024 chars, specific keywords for agent discovery]
-- **license**: [if applicable]
-- **compatibility**: [if applicable]
-- **metadata**: [if applicable]
-
-### Claude Code Extensions (if targeting Claude Code)
-- **disable-model-invocation**: [true/false and rationale]
-- **user-invocable**: [true/false and rationale]
-- **allowed-tools**: [list or none]
-- **model**: [override or none]
-- **context**: [fork or inline and rationale]
-- **agent**: [subagent type if context: fork]
-- **argument-hint**: [hint text if arguments expected]
-
-## Content Strategy
-- **Content type**: [Reference / Task / Hybrid]
-- **SKILL.md scope**: [what goes in the main file]
-- **Supporting files**: [what goes in references/, scripts/, assets/]
-- **Estimated tokens**: [target for SKILL.md body]
-
-## Argument Design
-- **Arguments accepted**: [list with descriptions]
-- **Positional mapping**: [$0 = ..., $1 = ...]
-- **Default behavior**: [what happens with no arguments]
-- **Edge cases**: [missing args, too many args, malformed args]
-
-## Dynamic Context (if applicable)
-- **Shell commands**: [list of !`command` injections]
-- **Rationale**: [why dynamic data is needed]
-
-## Progressive Disclosure Plan
-- **Tier 1 (description)**: [what the description conveys — ~100 tokens]
-- **Tier 2 (SKILL.md body)**: [main instructions — target < 5000 tokens]
-- **Tier 3 (references)**: [detailed docs loaded on demand]
-
-## Cross-Platform Compatibility
-- **Claude Code specifics**: [features used that are CC-only]
-- **local runner specifics**: [any local runner-only considerations]
-- **Fallback strategy**: [how the skill degrades on platforms that lack extended features]
-
-## Success Criteria
-<!-- How do we know the resulting skill works? -->
-
-## Notes for Builder
-<!-- Anything the Builder needs to know that does not fit above -->
-```
-
----
-
-## Part 6: Skill Evaluation Rubric Template
-
-This is the rubric the Reviewer will use instead of the 7-dimension agent rubric when reviewing skills.
-
-| Dimension | Question | Score |
-|---|---|---|
-| **Description Quality** | Does the description clearly convey what the skill does and when to use it? Would an agent correctly decide to load this skill based on the description alone? | /5 |
-| **Naming** | Does the name follow the `^[a-z0-9]+(-[a-z0-9]+)*$` pattern? Is it intuitive and discoverable? | /5 |
-| **Conciseness** | Is the SKILL.md under 500 lines? Is the body under 5000 tokens? Is every instruction earning its place? | /5 |
-| **Progressive Disclosure** | Is content split appropriately? Does SKILL.md focus on essentials while references/ holds details? | /5 |
-| **Argument Handling** | Are arguments well-documented? Are edge cases (missing, extra, malformed) handled? | /5 |
-| **Cross-Platform** | Does the skill work on all target platforms? Are platform-specific features gracefully handled? | /5 |
-| **Invocation Design** | Is the invocation mode (user/agent/both) appropriate? Is the description optimized for the chosen mode? | /5 |
-
-**Decision thresholds:** Same as agent reviews (all >= 4: APPROVE; any 3: APPROVE WITH NOTES; any <= 2: REJECT).
-
----
-
-## Implications for This Workspace
-
-1. The PromptArchitect pipeline can support skill creation without any modifications to existing files.
-2. Skills-as-overlays is the natural extension mechanism: the existing agents gain new capabilities through the very system they will help users build.
-3. The Agent Skills open standard provides a stable foundation that works across Claude Code and local runner, reducing platform-specific complexity.
-4. The main complexity lies in Claude Code's extended frontmatter fields, which need to be understood by the Planner (for architecture decisions) and the Builder (for correct YAML generation).
-5. The knowledge base should be updated with this research (this file) and the INDEX.md should be updated to reference it.
+| Core package | Directory with `SKILL.md` plus optional `scripts/`, `references/`, `assets/` | Follows the Agent Skills standard | Follows the Agent Skills standard |
+| Required frontmatter | `name`, `description` | Standard fields; docs also describe Claude Code-specific controls | Recognized fields: `name`, `description`, `license`, `compatibility`, `metadata`; unknown fields ignored |
+| Loading model | Metadata first, body on trigger, resources on demand | Metadata/frontmatter supports auto-load and direct `/skill-name` invocation | Skills are loaded on demand through the native `skill` tool |
+| Invocation | Spec defines package, not one UI | Direct slash invocation; `.claude/commands` still work but custom commands have merged into skills | Agent calls `skill({ name })`; permissions can allow, ask, deny, or disable the tool |
+| Search / location | Implementation-specific | `.claude/skills/<name>/SKILL.md` and product-supported skill surfaces | `.opencode/skills/`, global OpenCode skills, `.claude/skills/`, global Claude skills, `.agents/skills/`, global Agents skills; project-local paths walk up to the git worktree |
+| Commands relationship | Out of scope | Custom commands still work for compatibility; skills are the current capability surface | Commands remain separate templates under `commands/` with `description`, `agent`, `model`, `subtask`, arguments, shell output, and file references |
+| Best use | Portable skill package | Claude Code workflows needing slash invocation, subagent execution, or dynamic context | OpenCode on-demand procedural knowledge with explicit skill-tool permission control |
+
+## Design Rules: Skill vs Command vs Agent vs Reference
+
+### Create a skill when
+
+- The capability is repeatable and task-specific.
+- It needs on-demand instructions or resources that would bloat an always-loaded prompt.
+- Trigger conditions can be described clearly in 1-1024 characters.
+- The workflow benefits from progressive disclosure.
+- The same capability should be reusable across compatible agents or projects.
+
+### Prefer a command when
+
+- The user intentionally starts a workflow by name.
+- The artifact is mostly a template or macro with argument substitution, shell output, or file references.
+- The flow should choose an agent/model/subtask up front rather than adding mid-session capability.
+- Platform-specific command behavior is acceptable.
+
+### Prefer an agent when
+
+- The work needs a distinct role, reasoning style, risk posture, autonomy level, or tool permission boundary.
+- The behavior must govern the full session rather than one invoked procedure.
+- Context isolation or specialist review/judgment is the primary value.
+
+### Prefer a reference when
+
+- The content is passive background knowledge.
+- There is no clear invocation trigger or procedure.
+- A short rule in `AGENTS.md`, a research note, or a downstream reference file is enough.
+
+### Do not create a skill when
+
+- A one-line policy or checklist item would work.
+- The skill would mainly duplicate existing command/agent behavior.
+- The content is stale, unsourced, or too broad to test.
+- The target runtime workspace is unknown; design first, implement in the designated downstream runtime only.
+
+## D.A.R.T.E. Skill Workflow
+
+1. **Discovery** — Confirm target runtime, trigger, users/agents, inputs, outputs, tool needs, safety boundaries, source material, and whether a skill is better than a command, agent, or reference.
+2. **Architecture** — Specify name, description, platform targets, frontmatter fields, progressive-disclosure split, resources, permission assumptions, evaluation criteria, rollback path, and uncertainty.
+3. **Redaction** — Write `SKILL.md` and only the necessary supporting files in the designated runtime workspace. Keep the main body compact and task-focused; do not add identity/persona material.
+4. **Test** — Validate frontmatter/schema, invocation behavior, happy path, edge cases, adversarial misuse, permission/tool assumptions, and cross-platform degradation if portability is claimed.
+5. **Enhance** — Remove duplication, shorten the body, improve trigger wording, move heavy detail to resources, and rerun the evaluation checklist before approval.
+
+## Evaluation Checklist
+
+- **Fit**: Is a skill the right primitive instead of a command, agent, or reference?
+- **Name**: Does `name` match the directory and the standard regex?
+- **Description**: Does it clearly say what the skill does and when to use it, within 1-1024 characters?
+- **Frontmatter**: Are fields limited to the target platform's supported schema, with unknown/experimental fields used intentionally?
+- **Progressive disclosure**: Is `SKILL.md` concise, with long examples or references moved out?
+- **Resources**: Are bundled scripts/references/assets necessary, minimal, and safe?
+- **Invocation**: Are user-driven and agent-driven trigger paths tested on the target platform?
+- **Arguments/context**: Are arguments, dynamic context, and missing-input behavior documented and tested?
+- **Permissions/safety**: Are tool permissions, external side effects, secrets, and destructive actions constrained?
+- **Portability**: If cross-platform support is claimed, are Claude Code and OpenCode differences handled explicitly?
+- **Repository boundary**: For this repo, does the change avoid adding runtime config copies or root legacy prompt directories?
+- **Rollback**: Can the skill or downstream runtime change be removed cleanly?
+
+## Retired February 2026 File Plan
+
+The earlier plan proposed adding or mirroring skill artifacts under paths such as:
+
+- `prompts/templates/meta-task-create-skill.md`
+- `prompts/skills/<name>/...`
+- `.claude/skills/<name>/SKILL.md`
+- local-runtime skill mirrors
+- root runtime-oriented skill/prompt directories
+
+That plan is obsolete for `research-notes`. It reflected an older workspace model that treated this repository as a runtime prompt/config store. Current policy explicitly says not to reintroduce root `agents/`, `skills/`, `templates/`, `prompts/`, or `guides/`, and not to bulk-copy runtime skills here. Keep only durable architecture guidance in `knowledge/` and implement runtime skills externally when explicitly requested in the correct workspace.
+
+## Uncertainty and Re-check Path
+
+- Re-check Agent Skills and product docs after OpenCode or Claude Code upgrades, because frontmatter support, command behavior, and invocation controls may change.
+- Re-run `opencode --version` and `opencode debug config` before changing local OpenCode behavior.
+- Treat Claude Code-specific fields as product-specific until verified in current docs; do not assume OpenCode honors them.
+- If a future task asks to create a skill, first identify the target runtime workspace and confirm repository policy allows writing there.
+- If source docs contradict this note, update this research file and `knowledge/INDEX.md` before using the new rule operationally.
